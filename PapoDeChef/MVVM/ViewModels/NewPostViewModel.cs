@@ -202,7 +202,7 @@ namespace PapoDeChef.MVVM.ViewModels
                     .Exception(ex)
                     .Log();
 #endif
-                NavigationEvent.NavigateTo(nameof(ConfigsViewModel));
+                NavigationEvent.NavigateTo(nameof(SettingsViewModel));
             }
 
         }
