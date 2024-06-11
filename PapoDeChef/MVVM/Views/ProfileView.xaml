@@ -1,0 +1,44 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PapoDeChef.MVVM.Views"
+      xmlns:Templates="clr-namespace:PapoDeChef.MVVM.Views.Templates" x:Class="PapoDeChef.MVVM.Views.ProfileView"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="1280"
+      MinHeight="720" MinWidth="1280"
+      Title="ProfileView">
+
+    <Grid>
+        <Label Content="ProfileView" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="80"/>
+        <Label x:Name="Name" Content="{Binding Name}" HorizontalAlignment="Left" Margin="667,148,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="40"/>
+        <Label x:Name="Tag" Content="{Binding Tag}" HorizontalAlignment="Left" Margin="667,232,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="40"/>
+        <Image x:Name="ProfilePic"  Source="{Binding PicURL}" HorizontalAlignment="Left" Height="100" Margin="410,148,0,0" VerticalAlignment="Top" Width="100"/>
+
+        <Templates:NavBar HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        
+
+            <ListView ItemsSource="{Binding AccountPosts}" Margin="320,266,132,0" Height="444" Width="807" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="3" HorizontalAlignment="Center"/>
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                            <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
+                            <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                            <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Like" Command="{Binding DataContext.LikePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}"/>
+                            <Label Content="{Binding LikeCount}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+    </Grid>
+</Page>

@@ -1,0 +1,58 @@
+﻿<Window x:Class="PapoDeChef.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:view="clr-namespace:PapoDeChef.MVVM.Views"
+        xmlns:viewModel="clr-namespace:PapoDeChef.MVVM.ViewModels"
+        xmlns:templates="clr-namespace:PapoDeChef.MVVM.Views.Templates"
+        xmlns:local="clr-namespace:PapoDeChef"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        d:Height="720" d:Width="1280"
+        MinHeight="720" MinWidth="1280">
+
+    <Window.Resources>
+
+        <DataTemplate DataType="{x:Type viewModel:StartViewModel}">
+            <view:StartView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:SignUpViewModel}">
+            <view:SignUpView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:ProfileViewModel}">
+            <view:ProfileView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:HomeViewModel}">
+            <view:HomeView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:ExploreViewModel}">
+            <view:ExploreView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:ConfigsViewModel}">
+            <view:ConfigsView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:PostViewModel}">
+            <view:PostView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:NewPostViewModel}">
+            <view:NewPostView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewModel:ChatViewModel}">
+            <view:ChatView/>
+        </DataTemplate>
+
+    </Window.Resources>
+    
+    <Grid>
+        <Frame Content="{Binding CurrentViewModel}" NavigationUIVisibility="Hidden"/>
+    </Grid>
+</Window>

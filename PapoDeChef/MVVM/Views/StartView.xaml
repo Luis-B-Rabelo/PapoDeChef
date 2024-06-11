@@ -1,0 +1,19 @@
+﻿<Page x:Class="PapoDeChef.MVVM.Views.StartView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PapoDeChef.MVVM.Views"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="StartViewModel">
+
+    <Grid>
+        <Label Content="StartView" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="80"/>
+        <Button Content="SignUp" HorizontalAlignment="Left" Margin="29,222,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="60" Command="{Binding NavigateToSignUpCommand}"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" FontFamily="Arial" FontSize="40" Text="{Binding Tag}"/>
+        <TextBox HorizontalAlignment="Center" Margin="0,271,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" FontFamily="Arial" FontSize="40" Text="{Binding Password}"/>
+        <Button Content="SignIn" HorizontalAlignment="Center" Margin="0,343,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="60" Command="{Binding SignInCommand}"/>
+
+    </Grid>
+</Page>

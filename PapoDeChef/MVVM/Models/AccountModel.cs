@@ -1,0 +1,137 @@
+﻿#region Internal Libs
+#endregion
+
+#region Downloaded Libs
+using CommunityToolkit.Mvvm.ComponentModel;
+using System.Xml.Linq;
+#endregion
+
+#region Project Files
+#endregion
+
+
+
+namespace FoodSocialMedia.MVVM.Models
+{
+    public class AccountModel : IAccountModel
+    {
+        #region Properties
+        protected uint _id;
+
+        protected string _tag;
+
+        protected string _name;
+
+        protected string _email;
+
+        protected string _bio;
+
+        protected uint _qntFollowers;
+
+        protected List<string> _followers;
+
+        protected uint _qntFollowing;
+
+        protected List<string> _following;
+
+        protected byte _accessLevel;
+
+        protected DateOnly _creationDate;
+
+        #endregion
+
+        #region Getter & Setters
+
+        public IAccountModel Account
+        {
+            get => this;
+        }
+
+        public uint ID
+        {
+            get => _id;
+            set => _id = value;
+        }
+
+        public string Tag
+        {
+            get => _tag;
+            init => _tag = value;
+        }
+        public string Name
+        {
+            get => _name;
+            set => _name = value;
+        }
+
+        public string Email
+        {
+            get => _email;
+            set => _email = value;
+        }
+
+        public string Bio
+        {
+            get => _bio;
+            set => _bio = value;
+        }
+
+        public uint QntFollowers
+        {
+            get => (uint)_qntFollowers;
+            set => _qntFollowers = value;
+        }
+
+        public List<string> Followers
+        {
+            get => _followers;
+        }
+
+        public uint QntFollowing
+        {
+            get => (uint)_qntFollowing;
+            set => _qntFollowing = value;
+        }
+
+        public List<string> Following
+        {
+            get => _following;
+        }
+
+
+        public byte AccessLevel
+        {
+            get => _accessLevel;
+        }
+
+        public DateOnly CreationDate
+        {
+            get => _creationDate;
+        }
+
+        #endregion
+
+        #region Methods
+
+        public virtual void SetAccountModel(IDictionary<string, object> savedAccount)
+        {
+            _id = (uint)savedAccount["ID"];
+            _tag = (string)savedAccount["Tag"];
+            _email = (string)savedAccount["Email"];
+
+            _name = (string)savedAccount["Name"];
+            _bio = (string)savedAccount["Bio"];
+
+            _followers = (List<string>)savedAccount["Followers"];
+            _qntFollowers = (uint)savedAccount["QntFollowers"];
+
+            _following = (List<string>)savedAccount["Following"];
+            _qntFollowing = (uint)savedAccount["QntFollowing"];
+
+            _accessLevel = (byte)savedAccount["AccessLevel"];
+            _creationDate = (DateOnly)savedAccount["CreationDate"];
+        }
+
+        #endregion
+    }
+}
