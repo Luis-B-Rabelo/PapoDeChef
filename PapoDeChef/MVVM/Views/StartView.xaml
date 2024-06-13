@@ -5,15 +5,97 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PapoDeChef.MVVM.Views"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="720" d:DesignWidth="1280"
       Title="StartViewModel">
 
+    <Page.Resources>
+        <Style x:Key="BotaoArredondado" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="30" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#FF1F1F1F"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="22" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF313131"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF0C0C0C"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#FF3A3A3A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Estilo para TextBoxes -->
+        <Style x:Key="TextBoxArredondado" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="33" Background="{TemplateBinding Background}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#FF3A3A3A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+
     <Grid>
-        <Label Content="StartView" HorizontalAlignment="Center" Margin="0,30,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="80"/>
-        <Button Content="SignUp" HorizontalAlignment="Left" Margin="29,222,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="60" Command="{Binding NavigateToSignUpCommand}"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" FontFamily="Arial" FontSize="40" Text="{Binding Tag}"/>
-        <TextBox HorizontalAlignment="Center" Margin="0,271,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="212" FontFamily="Arial" FontSize="40" Text="{Binding Password}"/>
-        <Button Content="SignIn" HorizontalAlignment="Center" Margin="0,343,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="60" Command="{Binding SignInCommand}"/>
+
+        <Image Source="../../Resources/Images/FoodBackground.png" Stretch="UniformToFill" Grid.RowSpan="3" Grid.ColumnSpan="2" />
+
+
+        <Label Content="PAPO DE" Width="434" MinWidth="434" Height="123" MinHeight="123" FontFamily="Rockwell" FontWeight="Bold" FontSize="90" Foreground="White" Margin="278,237,568,360"/>
+        <Label Content="CHEF" Width="604" MinWidth="604" Height="217" MinHeight="217" Margin="108,288,568,215" FontFamily="Rockwell" FontWeight="Bold" FontSize="200" Foreground="White"/>
+        <Image Source="../../Resources/Images/MaskGroup.png" Width="464" MinWidth="464" Height="436" MinHeight="436" Margin="-82,42,958,242" Stretch="UniformToFill"/>
+
+        <Border Height="565" MinHeight="565" Width="435" MinWidth="435" Background="White" CornerRadius="50" Margin="756,77,89,77"/>
+
+        <Label Content="Fazer Login" Height="76" MinHeight="76" Width="345" MinWidth="345" Margin="802,123,135,521" HorizontalContentAlignment="Center" FontSize="50" Foreground="Red" FontFamily="Nunito" Background="#00000000" FontWeight="Bold"/>
+
+        <Label Content="Nome de Usuário" Width="164" MinWidth="164" Height="29" MinHeight="29" Margin="820,229,296,461" FontSize="20" Foreground="Black" FontFamily="Nunito" Background="#00000000"/>
+        <TextBox x:Name="tag" Width="350" MinWidth="350" Height="53" MinHeight="53" Margin="802,258,128,408" TextWrapping="Wrap" BorderThickness="2" Style="{StaticResource TextBoxArredondado}" Text="{Binding Tag}" FontFamily="Arial" FontSize="28" Padding="16,8,8,8" TextChanged="tag_TextChanged"/>
+        <Label x:Name="lblAvisoTag" Width="149" MinWidth="149" Height="26" MinHeight="26" Margin="985,235,146,459" Content="Nome de usuário inválido" Foreground="Red" Visibility="Hidden"/>
+
+        <Label Content="Senha" Width="71" MinWidth="71" Height="34" MinHeight="34" Margin="820,326,389,360" FontSize="20" Foreground="Black" FontFamily="Nunito" Background="#00000000"/>
+        <TextBox x:Name="password" Width="350" MinWidth="350" Height="53" MinHeight="53" Margin="797,354,133,313" TextWrapping="Wrap" BorderThickness="2" Style="{StaticResource TextBoxArredondado}" Text="{Binding Password}" FontFamily="Arial" FontSize="28" Padding="16,8,8,8"/>
+        <Label x:Name="lblAvisoSenha" Width="89" MinWidth="89" Height="24" MinHeight="24" Content="Senha inválida" Margin="1045,331,146,365" Foreground="Red" Visibility="Hidden"/>
+
+        <Button x:Name="login" Content="Entrar" Width="231" MinWidth="231" Height="49" MinHeight="49" Margin="858,495,191,163" Background="Red" FontFamily="Nunito" Foreground="White" FontSize="40" BorderThickness="0" Style="{StaticResource BotaoArredondado}" Command="{Binding SignInCommand}"/>
+        <Label Content="Não tem uma conta?" Height="24" Width="131" MinHeight="24" MinWidth="131" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="907,562,242,134" FontSize="13" Foreground="Black" FontFamily="Nunito" Background="#00000000"/>
+        <Button x:Name="signUp" Content="Crie uma Conta" Height="21" MinHeight="21" Width="116" MinWidth="116" Margin="914,583,250,116" Background="White" BorderThickness="0" Foreground="#FF4245FF" BorderBrush="White" FontSize="15" HorizontalContentAlignment="Center" Command="{Binding NavigateToSignUpCommand}" FontFamily="Nunito"/>
+
 
     </Grid>
 </Page>

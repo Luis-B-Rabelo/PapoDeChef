@@ -146,11 +146,11 @@ namespace PapoDeChef.MVVM.ViewModels
 
                     if (_ingredients != null && _directions != null)
                     {
-                        postID = PostDAO.CreateRecipePost(Session.AccountSession.ID, Title, Description, Ingredients, Directions);
+                        postID = PostDAO.CreateRecipePost(Session.AccountSession.ID, Session.AccountSession.Tag, Title, Description, Ingredients, Directions);
                     }
                     else
                     {
-                        postID = PostDAO.CreateNormalPost(Session.AccountSession.ID, Title, Description);
+                        postID = PostDAO.CreateNormalPost(Session.AccountSession.ID, Session.AccountSession.Tag, Title, Description);
                     }
 
                     if (postID != 0)
@@ -202,7 +202,7 @@ namespace PapoDeChef.MVVM.ViewModels
                     .Exception(ex)
                     .Log();
 #endif
-                NavigationEvent.NavigateTo(nameof(ConfigsViewModel));
+                NavigationEvent.NavigateTo(nameof(SettingsViewModel));
             }
 
         }

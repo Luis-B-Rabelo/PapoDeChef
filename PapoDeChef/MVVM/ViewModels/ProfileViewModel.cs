@@ -6,6 +6,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
+using PapoDeChef.MVVM.Models;
 
 namespace PapoDeChef.MVVM.ViewModels
 {
@@ -15,7 +16,7 @@ namespace PapoDeChef.MVVM.ViewModels
 
         private IAccountModel _account;
 
-        private ObservableCollection<PostModel> _accountPosts;
+        private ObservableCollection<IPostModel> _accountPosts;
 
         #endregion
 
@@ -31,7 +32,7 @@ namespace PapoDeChef.MVVM.ViewModels
             }
         }
 
-        public IList<PostModel> AccountPosts
+        public IList<IPostModel> AccountPosts
         {
             get => _accountPosts;
         }
@@ -87,7 +88,7 @@ namespace PapoDeChef.MVVM.ViewModels
             {
                 if (File.Exists($@"{Environment.CurrentDirectory}\Storage\ProfilePics\{Tag}.jpg"))
                 {
-                    return new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Storage\ProfilePics\{Tag}.jpg")).Clone();
+                    return new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Storage\ProfilePics\{Tag}.jpg"));
                 }
                 else
                 {

@@ -21,6 +21,24 @@
 
   <ItemGroup>
     <None Remove="NLog.config" />
+    <None Remove="Resources\Images\1623948016316.jpeg" />
+    <None Remove="Resources\Images\comment.png" />
+    <None Remove="Resources\Images\Estrela-preenchida.png" />
+    <None Remove="Resources\Images\Estrela.png" />
+    <None Remove="Resources\Images\FoodBackground.png" />
+    <None Remove="Resources\Images\Foto.png" />
+    <None Remove="Resources\Images\foundation_magnifying-glass.png" />
+    <None Remove="Resources\Images\gridicons_create.png" />
+    <None Remove="Resources\Images\Group.png" />
+    <None Remove="Resources\Images\IconeEngrenagem.png" />
+    <None Remove="Resources\Images\IconeLupa.png" />
+    <None Remove="Resources\Images\ic_round-home.png" />
+    <None Remove="Resources\Images\Like.png" />
+    <None Remove="Resources\Images\LogoPapoDeChef.png" />
+    <None Remove="Resources\Images\MaskGroup.png" />
+    <None Remove="Resources\Images\profile pic.png" />
+    <None Remove="Resources\Images\Rectangle 10.png" />
+    <None Remove="Resources\Images\uil_message.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -33,6 +51,31 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Images\1623948016316.jpeg" />
+    <Resource Include="Resources\Images\comment.png" />
+    <Resource Include="Resources\Images\Estrela-preenchida.png" />
+    <Resource Include="Resources\Images\Estrela.png" />
+    <Resource Include="Resources\Images\FoodBackground.png" />
+    <Resource Include="Resources\Images\Foto.png" />
+    <Resource Include="Resources\Images\foundation_magnifying-glass.png" />
+    <Resource Include="Resources\Images\gridicons_create.png" />
+    <Resource Include="Resources\Images\Group.png" />
+    <Resource Include="Resources\Images\IconeEngrenagem.png" />
+    <Resource Include="Resources\Images\IconeLupa.png" />
+    <Resource Include="Resources\Images\ic_round-home.png" />
+    <Resource Include="Resources\Images\Like.png" />
+    <Resource Include="Resources\Images\LogoPapoDeChef.png" />
+    <Resource Include="Resources\Images\MaskGroup.png" />
+    <Resource Include="Resources\Images\profile pic.png" />
+    <Resource Include="Resources\Images\Rectangle 10.png" />
+    <Resource Include="Resources\Images\uil_message.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Storage\Banners\" />
   </ItemGroup>
 
 </Project>

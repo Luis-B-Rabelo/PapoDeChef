@@ -17,10 +17,12 @@ namespace PapoDeChef.MVVM.Models
     {
         #region IProperties
 
-        public PostModel Post { get; }
+        public IPostModel Post { get; }
         public uint ID { get;}
 
         public uint AccountIDFK { get; }
+
+        public string AccountTagFK { get; }
 
         public string Title { get; }
 
@@ -32,7 +34,11 @@ namespace PapoDeChef.MVVM.Models
 
         public bool IsRecipePost { get; }
 
+        public ImageSource PicURI { get; }
+
         public ImageSource PostImgURI { get; }
+
+        public List<CommentModel> Comments { get; }
 
         public DateTime PostDateTime { get; }
 

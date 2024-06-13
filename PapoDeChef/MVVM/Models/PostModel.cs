@@ -6,6 +6,7 @@
 
 #region Project Files
 using PapoDeChef.MVVM.Models;
+using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 #endregion
@@ -22,6 +23,8 @@ namespace FoodSocialMedia.MVVM.Models
 
         protected uint _accountIDFK;
 
+        protected string _accountTagFK;
+
         protected string _title;
 
         protected string _description;
@@ -32,7 +35,7 @@ namespace FoodSocialMedia.MVVM.Models
 
         protected bool _isRecipePost;
 
-        protected ImageSource _postImgURI;
+        protected List<CommentModel> _comments;
 
         protected DateTime _postDateTime;
 
@@ -40,7 +43,7 @@ namespace FoodSocialMedia.MVVM.Models
 
         #region Getters & Setters
 
-        public PostModel Post
+        public IPostModel Post
         {
             get => this;
         }
@@ -48,6 +51,11 @@ namespace FoodSocialMedia.MVVM.Models
         public uint ID
         {
             get => _id;
+        }
+
+        public string AccountTagFK
+        {
+            get => _accountTagFK;
         }
 
         public uint AccountIDFK
@@ -80,9 +88,29 @@ namespace FoodSocialMedia.MVVM.Models
             get => _isRecipePost;
         }
 
+        public ImageSource PicURI
+        {
+            get
+            {
+                if (File.Exists($@"{Environment.CurrentDirectory}\Storage\ProfilePics\{_accountTagFK}.jpg"))
+                {
+                    return new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Storage\ProfilePics\{_accountTagFK}.jpg"));
+                }
+                else
+                {
+                    return new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Storage\ProfilePics\0.jpg"));
+                }
+            }
+        }
+
         public ImageSource PostImgURI
         {
-            get => _postImgURI;
+            get => new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Storage\Posts\{_id}.jpg"));
+        }
+
+        public List<CommentModel> Comments
+        {
+            get => _comments;
         }
 
         public DateTime PostDateTime
@@ -98,12 +126,13 @@ namespace FoodSocialMedia.MVVM.Models
         {
             _id = (uint)savedPost["ID"];
             _accountIDFK = (uint)savedPost["AccountIDFK"];
+            _accountTagFK = (string)savedPost["AccountTagFK"];
             _title = (string)savedPost["Title"];
             _description = (string)savedPost["Description"];
             _whoLikedID = (List<uint>)savedPost["WhoLikedID"];
             _likeCount = (uint)savedPost["LikeCount"];
             _isRecipePost = (bool)savedPost["IsRecipePost"];
-            _postImgURI = new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Storage\Posts\{_id}.jpg"));
+            _comments = (List<CommentModel>)savedPost["Comments"];
             _postDateTime = (DateTime)savedPost["PostDateTime"];
         }
 

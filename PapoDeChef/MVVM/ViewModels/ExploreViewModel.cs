@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using PapoDeChef.Events;
+using PapoDeChef.MVVM.Models;
 
 namespace PapoDeChef.MVVM.ViewModels
 {
@@ -13,13 +14,13 @@ namespace PapoDeChef.MVVM.ViewModels
     {
         #region Properties
 
-        private ObservableCollection<PostModel> _explorePosts;
+        private ObservableCollection<IPostModel> _explorePosts;
 
         #endregion
 
         #region Getters & Setters
 
-        public IList<PostModel> ExplorePosts
+        public IList<IPostModel> ExplorePosts
         {
             get => _explorePosts;
         }
@@ -39,7 +40,7 @@ namespace PapoDeChef.MVVM.ViewModels
         }
 
         [RelayCommand]
-        public void SeePost(PostModel post)
+        public void SeePost(IPostModel post)
         {
             NavigationEvent.Parameters = new Dictionary<string, object>
             {

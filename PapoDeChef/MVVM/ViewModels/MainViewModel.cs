@@ -80,8 +80,8 @@ namespace PapoDeChef.MVVM.ViewModels
                 case nameof(ExploreViewModel):
                     CurrentViewModel = new ExploreViewModel();
                     break;
-                case nameof(ConfigsViewModel):
-                    CurrentViewModel = new ConfigsViewModel();
+                case nameof(SettingsViewModel):
+                    CurrentViewModel = new SettingsViewModel();
                     break;
                 case nameof(PostViewModel):
                     CurrentViewModel = new PostViewModel(parameters);

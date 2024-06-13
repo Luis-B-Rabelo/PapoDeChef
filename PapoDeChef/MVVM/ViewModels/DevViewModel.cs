@@ -53,7 +53,7 @@ namespace PapoDeChef.MVVM.ViewModels
 
         private void NavigateToConfigs()
         {
-            NavigationEvent.NavigateTo(nameof(ConfigsViewModel));
+            NavigationEvent.NavigateTo(nameof(SettingsViewModel));
         }
 
         private void NavigateToPost()
