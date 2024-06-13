@@ -72,7 +72,7 @@ namespace PapoDeChef.MVVM.ViewModels
                     CurrentViewModel = new SignUpViewModel();
                     break;
                 case nameof(ProfileViewModel):
-                    CurrentViewModel = new ProfileViewModel();
+                    CurrentViewModel = new ProfileViewModel(parameters);
                     break;
                 case nameof(HomeViewModel):
                     CurrentViewModel = new HomeViewModel();

@@ -97,7 +97,7 @@ namespace PapoDeChef.MVVM.ViewModels
             }
         }
 
-        public List<string> Followers 
+        public List<uint> Followers 
         { 
             get
             {
@@ -107,7 +107,7 @@ namespace PapoDeChef.MVVM.ViewModels
                 }
                 else
                 {
-                    return new List<string>(); 
+                    return new List<uint>(); 
                 }
             }
         }
@@ -127,7 +127,7 @@ namespace PapoDeChef.MVVM.ViewModels
             }
         }
 
-        public List<string> Following
+        public List<uint> Following
         {
             get
             {
@@ -137,7 +137,7 @@ namespace PapoDeChef.MVVM.ViewModels
                 }
                 else
                 {
-                    return new List<string>();
+                    return new List<uint>();
                 }
             }
         }
@@ -160,9 +160,14 @@ namespace PapoDeChef.MVVM.ViewModels
 
         #region Methods
 
-        public ProfileViewModel()
+        public ProfileViewModel(Dictionary<string, object>? parameters)
         {
-            if(Session.AccountSession.Tag != null) 
+            if (parameters != null && (uint)parameters["ID"] != Session.AccountSession.ID)
+            {
+                Account = AccountDAO.GetAccountByID((uint)parameters["ID"]);
+                _accountPosts = PostDAO.GetAccountPosts((uint)parameters["ID"]);
+            }
+            else
             {
                 Account = AccountDAO.GetAccountByID(Session.AccountSession.ID);
                 _accountPosts = PostDAO.GetAccountPosts(Session.AccountSession.ID);
@@ -176,6 +181,12 @@ namespace PapoDeChef.MVVM.ViewModels
         public void LikePost(uint postID)
         {
             PostDAO.LikePost(postID, Session.AccountSession.ID);
+        }
+
+        [RelayCommand]
+        public void FollowUser()
+        {
+
         }
         #endregion
     }

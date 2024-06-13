@@ -1,10 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.Input;
-using FoodSocialMedia.MVVM.Models;
 using PapoDeChef.Core;
 using PapoDeChef.DAO;
 using System.Collections.ObjectModel;
-using System.Windows.Media.Imaging;
-using System.Windows.Media;
 using PapoDeChef.Events;
 using PapoDeChef.MVVM.Models;
 

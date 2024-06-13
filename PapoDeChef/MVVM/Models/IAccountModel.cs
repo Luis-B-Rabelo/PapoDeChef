@@ -3,6 +3,7 @@
 
 #region Downloaded Libs
 using CommunityToolkit.Mvvm.ComponentModel;
+using PapoDeChef.MVVM.Models;
 #endregion
 
 #region Project Files
@@ -17,6 +18,11 @@ namespace FoodSocialMedia.MVVM.Models
         #region IProperties
 
         public IAccountModel Account
+        {
+            get;
+        }
+
+        public uint ID
         {
             get;
         }
@@ -50,7 +56,7 @@ namespace FoodSocialMedia.MVVM.Models
             set;
         }
 
-        public List<string> Followers
+        public List<PreviewAccountModel> Followers
         {
             get;
         }
@@ -61,7 +67,7 @@ namespace FoodSocialMedia.MVVM.Models
             set;
         }
 
-        public List<string> Following
+        public List<PreviewAccountModel> Following
         {
             get;
         }

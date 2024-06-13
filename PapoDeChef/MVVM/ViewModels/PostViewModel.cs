@@ -3,6 +3,7 @@ using FoodSocialMedia.MVVM.Models;
 using PapoDeChef.Core;
 using PapoDeChef.DAO;
 using PapoDeChef.MVVM.Models;
+using System.Collections.ObjectModel;
 using System.Windows.Media;
 
 namespace PapoDeChef.MVVM.ViewModels
@@ -56,7 +57,7 @@ namespace PapoDeChef.MVVM.ViewModels
             get => _post.PostImgURI;
         }
 
-        public List<CommentModel> Comments
+        public ObservableCollection<CommentModel> Comments
         {
             get => _post.Comments;
         }
@@ -87,7 +88,7 @@ namespace PapoDeChef.MVVM.ViewModels
 
         public PostViewModel(Dictionary<string, object>? parameters) 
         {
-            _post = (IPostModel)parameters["Post"]; 
+            _post = (IPostModel)parameters["Post"];
         }
 
         [RelayCommand]
@@ -99,15 +100,20 @@ namespace PapoDeChef.MVVM.ViewModels
         [RelayCommand]
         public void CommentOnPost()
         {
+            CommentModel comment = new CommentModel();
+
             if (Rating == null)
             {
                 PostDAO.CommentOnNormalPost(ID, Session.AccountSession.Tag, NewComment);
+                comment.SetNormalComment(Session.AccountSession.Tag, NewComment);
             }
             else
             {
                 PostDAO.CommentOnRecipePost(ID, Session.AccountSession.Tag, NewComment, (byte)_rating);
+                comment.SetRecipeComment(Session.AccountSession.Tag, NewComment, (byte)_rating);
             }
 
+            NewComment = null;
         }
 
         #endregion

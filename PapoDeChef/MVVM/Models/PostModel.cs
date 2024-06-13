@@ -6,6 +6,7 @@
 
 #region Project Files
 using PapoDeChef.MVVM.Models;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -35,7 +36,7 @@ namespace FoodSocialMedia.MVVM.Models
 
         protected bool _isRecipePost;
 
-        protected List<CommentModel> _comments;
+        protected ObservableCollection<CommentModel> _comments;
 
         protected DateTime _postDateTime;
 
@@ -108,7 +109,7 @@ namespace FoodSocialMedia.MVVM.Models
             get => new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Storage\Posts\{_id}.jpg"));
         }
 
-        public List<CommentModel> Comments
+        public ObservableCollection<CommentModel> Comments
         {
             get => _comments;
         }
@@ -132,7 +133,7 @@ namespace FoodSocialMedia.MVVM.Models
             _whoLikedID = (List<uint>)savedPost["WhoLikedID"];
             _likeCount = (uint)savedPost["LikeCount"];
             _isRecipePost = (bool)savedPost["IsRecipePost"];
-            _comments = (List<CommentModel>)savedPost["Comments"];
+            _comments = (ObservableCollection<CommentModel>)savedPost["Comments"];
             _postDateTime = (DateTime)savedPost["PostDateTime"];
         }
 

@@ -13,17 +13,30 @@ namespace FoodSocialMedia.MVVM.Models
     {
         #region Properties
 
-        private uint messageId;
+        private uint _sentByUserId;
 
-        private uint sentByUserId;
+        private string _message;
 
-        private string message;
+        private DateTime _sentDateTime;
 
-        private DateTime sentDateTime;
+        #endregion
+
+        #region Getters & Setters
+
+        public uint SentByUserId;
+
+        public string Message;
+
+        public DateTime SentDateTime;
 
         #endregion
 
         #region Methods
+
+        public void SetMessageModel(uint sentByUserID, string message)
+        {
+
+        }
 
         #endregion
     }

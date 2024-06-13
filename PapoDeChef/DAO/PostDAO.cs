@@ -24,7 +24,7 @@ namespace PapoDeChef.DAO
                     { "WhoLikedID", new List<uint>() },
                     { "LikeCount", (uint)0 },
                     { "IsRecipePost", false },
-                    { "Comments", new List<CommentModel>()},
+                    { "Comments", new ObservableCollection<CommentModel>()},
                     { "PostDateTime", DateTime.Now }
                 };
 
@@ -65,8 +65,9 @@ namespace PapoDeChef.DAO
                     { "WhoLikedID", new List<uint>() },
                     { "LikeCount", (uint)0 },
                     { "IsRecipePost", true },
-                    { "Comments", new List<CommentModel>() },
+                    { "Comments", new ObservableCollection<CommentModel>() },
                     { "PostDateTime", DateTime.Now },
+                    { "SumOfRatings", (uint)0 },
                     { "Ratings", (uint)0 },
                     { "AverageRating", 0.0f },
                     { "Ingredients", ingredients },
@@ -252,7 +253,7 @@ namespace PapoDeChef.DAO
             {
                 int postIndex = DBConn.DB.Posts.FindIndex(post => (uint)post["ID"] == postID);
 
-                List<CommentModel> temporaryList = (List<CommentModel>)DBConn.DB.Posts[postIndex]["Comments"];
+                ObservableCollection<CommentModel> temporaryList = (ObservableCollection<CommentModel>)DBConn.DB.Posts[postIndex]["Comments"];
                 CommentModel commentModel = new CommentModel();
                 commentModel.SetNormalComment(accountTag, comment);
                 temporaryList.Add(commentModel);
@@ -291,11 +292,15 @@ namespace PapoDeChef.DAO
             {
                 int postIndex = DBConn.DB.Posts.FindIndex(post => (uint)post["ID"] == postID);
 
-                List<CommentModel> temporaryList = (List<CommentModel>)DBConn.DB.Posts[postIndex]["Comments"];
+                ObservableCollection<CommentModel> temporaryList = (ObservableCollection<CommentModel>)DBConn.DB.Posts[postIndex]["Comments"];
                 CommentModel commentModel = new CommentModel();
-                commentModel.SetNormalComment(accountTag, comment);
+                commentModel.SetRecipeComment(accountTag, comment, rating);
                 temporaryList.Add(commentModel);
                 DBConn.DB.Posts[postIndex]["Comments"] = temporaryList;
+                DBConn.DB.Posts[postIndex]["SumOfRatings"] = (uint)DBConn.DB.Posts[postIndex]["SumOfRatings"] + rating;
+                DBConn.DB.Posts[postIndex]["Ratings"] = (uint)DBConn.DB.Posts[postIndex]["Ratings"] + 1;
+                DBConn.DB.Posts[postIndex]["AverageRating"] = (float)(uint)DBConn.DB.Posts[postIndex]["SumOfRatings"] / (uint)DBConn.DB.Posts[postIndex]["Ratings"];
+
                 temporaryList = null;
 
 #if DEBUG

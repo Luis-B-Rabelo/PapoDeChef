@@ -2,6 +2,7 @@
 using NLog;
 using PapoDeChef.Core;
 using PapoDeChef.Database;
+using System.Security.Principal;
 
 namespace PapoDeChef.DAO
 {
@@ -26,9 +27,9 @@ namespace PapoDeChef.DAO
                 { "Email", email },
                 { "Bio", string.Empty },
                 { "QntFollowers", (uint)0 },
-                { "Followers", new List<string>() },
+                { "Followers", new List<uint>() },
                 { "QntFollowing", (uint)0 },
-                { "Following", new List<string>()},
+                { "Following", new List<uint>()},
                 { "AccessLevel", (byte)0 },
                 { "CreationDate", DateOnly.Parse(DateTime.Today.ToString("d")) },
                 { "Birthdate", new DateOnly() }
@@ -235,6 +236,106 @@ namespace PapoDeChef.DAO
             }
         }
 
+        public static bool FollowAccount(uint followID, uint followerID)
+        {
+            try
+            {
+                int index; 
+                List<uint> follow;
+
+                index = DBConn.DB.Accounts.FindIndex(acc => (uint)acc["ID"] == followID);
+
+
+                DBConn.DB.Accounts[index]["QntFollowers"] = (uint)DBConn.DB.Accounts[index]["QntFollowers"] + 1;
+
+                follow = (List<uint>)DBConn.DB.Accounts[index]["Followers"];
+
+                follow.Add(followerID);
+
+                DBConn.DB.Accounts[index]["Followers"] = follow;
+
+                index = DBConn.DB.Accounts.FindIndex(acc => (uint)acc["ID"] == followerID);
+
+                DBConn.DB.Accounts[index]["QntFollowing"] = (uint)DBConn.DB.Accounts[index]["QntFollowing"] + 1;
+
+                follow = (List<uint>)DBConn.DB.Accounts[index]["Following"];
+                follow.Add(followID);
+
+                DBConn.DB.Accounts[index]["Following"] = follow;
+
+#if DEBUG
+                GlobalNecessities.Logger.ForDebugEvent()
+                    .Message("Conta começou a seguir outra")
+                    .Property("FollowerID", followerID)
+                    .Property("FollowingID", followID)
+                    .Log();
+#endif
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                GlobalNecessities.Logger.ForErrorEvent()
+                    .Message("Conta não conseguiu começar a seguir outra")
+                    .Property("FollowerID", followerID)
+                    .Property("FollowingID", followID)
+                    .Exception(ex)
+                    .Log();
+#endif
+                return false;
+            }
+        }
+
+        public static bool UnfollowAccount(uint followID, uint followerID)
+        {
+            try
+            {
+                int index;
+                List<uint> follow;
+
+                index = DBConn.DB.Accounts.FindIndex(acc => (uint)acc["ID"] == followID);
+
+                DBConn.DB.Accounts[index]["QntFollowers"] = (uint)DBConn.DB.Accounts[index]["QntFollowers"] - 1;
+
+                follow = (List<uint>)DBConn.DB.Accounts[index]["Followers"];
+                follow.Remove(followerID);
+
+                DBConn.DB.Accounts[index]["Followers"] = follow;
+
+                index = DBConn.DB.Accounts.FindIndex(acc => (uint)acc["ID"] == followerID);
+
+                DBConn.DB.Accounts[index]["QntFollowing"] = (uint)DBConn.DB.Accounts[index]["QntFollowing"] - 1;
+
+                follow = (List<uint>)DBConn.DB.Accounts[index]["Following"];
+                follow.Remove(followID);
+
+                DBConn.DB.Accounts[index]["Following"] = follow;
+
+#if DEBUG
+                GlobalNecessities.Logger.ForDebugEvent()
+                    .Message("Conta parou de seguir outra")
+                    .Property("FollowerID", followerID)
+                    .Property("FollowingID", followID)
+                    .Log();
+#endif
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                GlobalNecessities.Logger.ForErrorEvent()
+                    .Message("Conta não conseguiu parar de seguir outra")
+                    .Property("FollowerID", followerID)
+                    .Property("FollowingID", followID)
+                    .Exception(ex)
+                    .Log();
+#endif
+                return false;
+            }
+        }
+
         private static IDictionary<string, object> NaturalPersonAccountModelToDictionary(NaturalPersonAccountModel naturalPersonAccountModel, bool converter)
         {
             try
@@ -387,5 +488,7 @@ namespace PapoDeChef.DAO
                 return null;
             }
         }
+
+        
     }
 }

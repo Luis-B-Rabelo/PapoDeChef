@@ -19,6 +19,8 @@ namespace FoodSocialMedia.MVVM.Models
 
         private string[]? _address;
 
+        private uint? _ratings;
+
         private float? _averageRating;
 
         #endregion
@@ -43,6 +45,12 @@ namespace FoodSocialMedia.MVVM.Models
             set => _address = value;
         }
 
+        public uint? Ratings
+        {
+            get => _ratings;
+            set => _ratings = value;
+        }
+
         public float? AverageRating
         {
             get => _averageRating;
@@ -62,25 +70,6 @@ namespace FoodSocialMedia.MVVM.Models
             _category = (string)savedAccount["Category"];
             _address = (string[])savedAccount["Address"];
             _averageRating = (float)savedAccount["AverageRating"];
-        }
-
-        public void NaturalAccountToLegal(NaturalPersonAccountModel naturalAccount)
-        {
-            _tag = naturalAccount.Tag;
-            _name = naturalAccount.Name;
-            _email = naturalAccount.Email;
-            _bio = naturalAccount.Bio;
-            _qntFollowers = naturalAccount.QntFollowers;
-            _followers = naturalAccount.Followers;
-            _qntFollowing = naturalAccount.QntFollowing;
-            _following = naturalAccount.Following;
-            _accessLevel = 1;
-            _creationDate = (DateOnly)naturalAccount.CreationDate;
-
-            _foundDate = new DateOnly();
-            _address = new string[6];
-            _category = "";
-            _averageRating = 0.0f;
         }
 
         #endregion

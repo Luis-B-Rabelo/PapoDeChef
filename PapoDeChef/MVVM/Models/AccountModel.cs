@@ -3,6 +3,7 @@
 
 #region Downloaded Libs
 using CommunityToolkit.Mvvm.ComponentModel;
+using PapoDeChef.MVVM.Models;
 using System.Xml.Linq;
 #endregion
 
@@ -13,12 +14,9 @@ using System.Xml.Linq;
 
 namespace FoodSocialMedia.MVVM.Models
 {
-    public class AccountModel : IAccountModel
+    public class AccountModel : PreviewAccountModel, IAccountModel
     {
         #region Properties
-        protected uint _id;
-
-        protected string _tag;
 
         protected string _name;
 
@@ -28,11 +26,11 @@ namespace FoodSocialMedia.MVVM.Models
 
         protected uint _qntFollowers;
 
-        protected List<string> _followers;
+        protected List<PreviewAccountModel> _followers;
 
         protected uint _qntFollowing;
 
-        protected List<string> _following;
+        protected List<PreviewAccountModel> _following;
 
         protected byte _accessLevel;
 
@@ -47,17 +45,6 @@ namespace FoodSocialMedia.MVVM.Models
             get => this;
         }
 
-        public uint ID
-        {
-            get => _id;
-            set => _id = value;
-        }
-
-        public string Tag
-        {
-            get => _tag;
-            init => _tag = value;
-        }
         public string Name
         {
             get => _name;
@@ -82,7 +69,7 @@ namespace FoodSocialMedia.MVVM.Models
             set => _qntFollowers = value;
         }
 
-        public List<string> Followers
+        public List<PreviewAccountModel> Followers
         {
             get => _followers;
         }
@@ -93,7 +80,7 @@ namespace FoodSocialMedia.MVVM.Models
             set => _qntFollowing = value;
         }
 
-        public List<string> Following
+        public List<PreviewAccountModel> Following
         {
             get => _following;
         }
@@ -122,10 +109,10 @@ namespace FoodSocialMedia.MVVM.Models
             _name = (string)savedAccount["Name"];
             _bio = (string)savedAccount["Bio"];
 
-            _followers = (List<string>)savedAccount["Followers"];
+            _followers = (List<uint>)savedAccount["Followers"];
             _qntFollowers = (uint)savedAccount["QntFollowers"];
 
-            _following = (List<string>)savedAccount["Following"];
+            _following = (List<uint>)savedAccount["Following"];
             _qntFollowing = (uint)savedAccount["QntFollowing"];
 
             _accessLevel = (byte)savedAccount["AccessLevel"];

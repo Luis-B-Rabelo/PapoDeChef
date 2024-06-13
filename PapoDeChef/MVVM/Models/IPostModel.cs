@@ -1,5 +1,6 @@
 ﻿#region Internal Libs
 using FoodSocialMedia.MVVM.Models;
+using System.Collections.ObjectModel;
 using System.Windows.Media;
 #endregion
 
@@ -38,7 +39,7 @@ namespace PapoDeChef.MVVM.Models
 
         public ImageSource PostImgURI { get; }
 
-        public List<CommentModel> Comments { get; }
+        public ObservableCollection<CommentModel> Comments { get; }
 
         public DateTime PostDateTime { get; }
 
