@@ -16,6 +16,12 @@ namespace PapoDeChef.MVVM.ViewModels
 {
     public class NewPostViewModel : ViewModel
     {
+        #region Commands
+
+        public ICommand NavigateToHomeCommand { init; get; }
+
+        #endregion
+
         #region Properties
 
         private string _postImgURI;
@@ -103,6 +109,7 @@ namespace PapoDeChef.MVVM.ViewModels
 
         public NewPostViewModel()
         {
+            NavigateToHomeCommand = new RelayCommand(NavigateToHome);
             ChoosePostImageCommand = new RelayCommand(ChoosePostImage);
             CompletePostCommand = new RelayCommand(CompletePost);
         }
@@ -205,6 +212,11 @@ namespace PapoDeChef.MVVM.ViewModels
                 NavigationEvent.NavigateTo(nameof(SettingsViewModel));
             }
 
+        }
+
+        private void NavigateToHome()
+        {
+            NavigationEvent.NavigateTo(nameof(HomeViewModel));
         }
 
         #endregion
