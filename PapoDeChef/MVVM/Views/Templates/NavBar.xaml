@@ -7,16 +7,55 @@
              DataContext="{Binding NavBar}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="320"
-             MinHeight="720" MinWidth="320">
+             MinHeight="720" MinWidth="320"
+             Background="White">
+    
     <Grid>
-        <Label HorizontalAlignment="Center" Margin="0,44,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="50" Content="Papo de&#xD;&#xA; Chef"/>
-        <Button Content="Início" HorizontalAlignment="Center" Margin="0,241,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="40" Command="{Binding NavigateToHomeCommand}"/>
-        <Button Content="Explorar" HorizontalAlignment="Center" Margin="0,291,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="40" />
-        <Button Content="Mensagens" HorizontalAlignment="Center" VerticalAlignment="Top" FontFamily="Arial" FontSize="40" Margin="0,341,0,0" Command="{Binding NavigateToChatCommand}"/>
-        <Button Content="Criar" HorizontalAlignment="Center" Margin="0,391,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="40" Command="{Binding NavigateToNewPostCommand}"/>
-        <Button Content="Perfil" HorizontalAlignment="Center" Margin="0,441,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="40" Command="{Binding NavigateToProfileCommand}"/>
-        <Button Content="Configurações" HorizontalAlignment="Center" Margin="0,660,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="40" Command="{Binding NavigateToConfigsCommand}"/>
-        <Image HorizontalAlignment="Left" Height="50" Margin="62,441,0,0" VerticalAlignment="Top" Width="50" Source="{Binding NavBarPicURL}"/>
+        <Label Content="papo de CHEF" Width="269" MinWidth="260" Height="62" MinHeight="62" Margin="51,82,0,576" FontFamily="Rockwell" FontSize="35" FontWeight="Bold"/>
+        <Image Margin="-22,0,236,576" Width="146" MinWidth="146" Height="144" MinHeight="144" Source="/Resources/Images/MaskGroup.png" Stretch="Fill"/>
+
+        <Button x:Name="btnInicio" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,182,0,467" Background="White" BorderBrush="White" Command="{Binding NavigateToHomeCommand}">
+            <StackPanel Height="71" Width="360">
+                <Image Source="/Resources/Images/ic_round-home.png" Width="46" Margin="0,10,300,0" />
+                <Label Content="Início" Margin="48,-36,0,0" FontFamily="Rockwell" FontSize="18" FontWeight="Bold"/>
+            </StackPanel>
+        </Button>
+
+        <Button x:Name="btnExplorar" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,253,0,396" Background="White" BorderBrush="White" Command="{Binding NavigateToExploreCommand}">
+            <StackPanel Height="71" Width="360">
+                <Image Source="/Resources/Images/foundation_magnifying-glass.png" Width="46" Margin="0,10,300,0" />
+                <Label Content="Explorar" Margin="48,-36,0,0" FontFamily="Rockwell" FontSize="18" FontWeight="Bold"/>
+            </StackPanel>
+        </Button>
+
+        <Button x:Name="btnMensagens" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,324,0,325" Background="White" BorderBrush="White" Command="{Binding NavigateToChatCommand}">
+            <StackPanel Height="71" Width="360">
+                <Image Source="/Resources/Images/Group.png" Width="46" Margin="0,10,300,0" />
+                <Label Content="Mensagens" Margin="48,-36,0,0" FontFamily="Rockwell" FontSize="18" FontWeight="Bold"/>
+            </StackPanel>
+        </Button>
+
+        <Button x:Name="btnCriar" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,395,0,254" Background="White" BorderBrush="White" Command="{Binding NavigateToNewPostCommand}">
+            <StackPanel Height="71" Width="360">
+                <Image Source="/Resources/Images/gridicons_create.png" Width="46" Margin="0,10,300,0" />
+                <Label Content="Criar" Margin="48,-36,0,0" FontFamily="Rockwell" FontSize="18" FontWeight="Bold"/>
+            </StackPanel>
+        </Button>
+
+        <Button x:Name="btnPerfil" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,471,0,178" Background="White" BorderBrush="White" Command="{Binding NavigateToProfileCommand}">
+            <StackPanel Height="71" Width="360">
+                <Image Source="{Binding NavBarPicURL}" Width="46" Height="46" Margin="0,10,300,0" />
+                <Label Content="Perfil" Margin="48,-36,0,0" FontFamily="Rockwell" FontSize="18" FontWeight="Bold"/>
+            </StackPanel>
+        </Button>
+
+        <Button x:Name="btnConfiguracoes" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,639,0,10" Background="White" BorderBrush="White" Command="{Binding NavigateToConfigsCommand}">
+            <StackPanel Height="71" Width="360">
+                <Image Source="/Resources/Images/IconeEngrenagem.png" Width="46" Margin="0,10,300,0" />
+                <Label Content="Configurações" Margin="48,-36,0,0" FontFamily="Rockwell" FontSize="18" FontWeight="Bold"/>
+            </StackPanel>
+        </Button>
+
 
     </Grid>
 </UserControl>
