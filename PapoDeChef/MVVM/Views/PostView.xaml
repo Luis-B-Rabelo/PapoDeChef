@@ -22,15 +22,18 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <StackPanel Orientation="Vertical">
-                            <Image Source="{Binding PicURI}" Width="50" Height="50"/>
-                            <Label Content="{Binding CommentedByAccountTag}"/>
-                        </StackPanel>
+                        <Button Foreground="{x:Null}" Command="{Binding DataContext.SeeAccountCommand, RelativeSource={RelativeSource AncestorType={x:Type local:PostView}, Mode=FindAncestor}}" CommandParameter="{Binding Account.ID}">
+                            <StackPanel Orientation="Vertical">
+                                <Image Source="{Binding Account.PicURI}" Width="50" Height="50"/>
+                                <Label Content="{Binding Account.Tag}"/>
+                            </StackPanel>
+                        </Button>
                         <TextBlock FontFamily="Arial" FontSize="20" Text="{Binding Comment}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        
         <TextBox HorizontalAlignment="Left" Margin="855,618,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="293" FontFamily="Arial" FontSize="30" Height="92" Text="{Binding NewComment}"/>
         <Button Content="Like" Command="{Binding LikePostCommand}" CommandParameter="{Binding ID}" FontFamily="Arial" FontSize="30" Margin="739,618,451,10"/>
         <Button Content="Comentar" HorizontalAlignment="Left" Margin="1166,618,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="20" Height="92" Command="{Binding CommentOnPostCommand}"/>

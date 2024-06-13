@@ -17,10 +17,12 @@
             <ListBox ItemsSource="{Binding Post}">
                 <Button Foreground="{x:Null}" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ExploreView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
                     <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding PicURI}" Width="50" Height="50"/>
-                            <Label Content="{Binding AccountTagFK}"/>
-                        </StackPanel>
+                        <Button Foreground="{x:Null}" Command="{Binding DataContext.SeeAccountCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ExploreView}, Mode=FindAncestor}}" CommandParameter="{Binding Account.ID}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Account.PicURI}" Width="50" Height="50"/>
+                                <Label Content="{Binding Account.Tag}"/>
+                            </StackPanel>
+                        </Button>
                         <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
                         <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
                         <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
@@ -37,10 +39,12 @@
             <ListBox ItemsSource="{Binding Post}">
                 <Button Foreground="{x:Null}" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ExploreView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
                     <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding PicURI}" Width="50" Height="50"/>
-                            <Label Content="{Binding AccountTagFK}"/>
-                        </StackPanel>
+                        <Button Foreground="{x:Null}" Command="{Binding DataContext.SeeAccountCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ExploreView}, Mode=FindAncestor}}" CommandParameter="{Binding Account.ID}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Account.PicURI}" Width="50" Height="50"/>
+                                <Label Content="{Binding Account.Tag}"/>
+                            </StackPanel>
+                        </Button>
                         <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
                         <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
                         <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
@@ -65,7 +69,7 @@
       
         <templates:NavBar HorizontalAlignment="Left"/>
 
-        <ListView ItemsSource="{Binding ExplorePosts}" Margin="432,59,432,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+        <ListView ItemsSource="{Binding ExplorePosts}" ItemTemplateSelector="{StaticResource PostTemplateSelector}" Margin="432,59,432,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="3" HorizontalAlignment="Center"/>

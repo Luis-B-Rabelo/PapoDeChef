@@ -4,11 +4,53 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PapoDeChef.MVVM.Views"
-      xmlns:Templates="clr-namespace:PapoDeChef.MVVM.Views.Templates" x:Class="PapoDeChef.MVVM.Views.ProfileView"
+      xmlns:templates="clr-namespace:PapoDeChef.MVVM.Views.Templates" 
+      x:Class="PapoDeChef.MVVM.Views.ProfileView"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1280"
       MinHeight="720" MinWidth="1280"
       Title="ProfileView">
+
+    <Page.Resources>
+        <DataTemplate x:Key="NormalPostTemplate">
+            <ListBox ItemsSource="{Binding Post}">
+                <Button Foreground="{x:Null}" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
+                        <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                        <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Like" Command="{Binding DataContext.LikePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}"/>
+                            <Label Content="{Binding LikeCount}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Button>
+            </ListBox>
+        </DataTemplate>
+
+        <DataTemplate x:Key="RecipePostTemplate">
+            <ListBox ItemsSource="{Binding Post}">
+                <Button Foreground="{x:Null}" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
+                        <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                        <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Like" Command="{Binding DataContext.LikePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}"/>
+                            <Label Content="{Binding LikeCount}"/>
+                            <Label Content="{Binding Ratings}" Margin="10,0,0,0"/>
+                            <Label Content="{Binding AverageRating}" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Button>
+            </ListBox>
+        </DataTemplate>
+
+        <templates:PostTemplateSelector x:Key="PostTemplateSelector"
+                                    NormalPostTemplate="{StaticResource NormalPostTemplate}"
+                                    RecipePostTemplate="{StaticResource RecipePostTemplate}"/>
+
+    </Page.Resources>
 
     <Grid>
         <Label Content="ProfileView" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="80"/>
@@ -16,29 +58,57 @@
         <Label x:Name="Tag" Content="{Binding Tag}" HorizontalAlignment="Left" Margin="667,232,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="40"/>
         <Image x:Name="ProfilePic"  Source="{Binding PicURL}" HorizontalAlignment="Left" Height="100" Margin="410,148,0,0" VerticalAlignment="Top" Width="100"/>
 
-        <Templates:NavBar HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        
+        <templates:NavBar HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
-            <ListView ItemsSource="{Binding AccountPosts}" Margin="320,266,132,0" Height="444" Width="807" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <UniformGrid Columns="3" HorizontalAlignment="Center"/>
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
-                            <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
-                            <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+        <ListView ItemsSource="{Binding AccountPosts}" ItemTemplateSelector="{StaticResource PostTemplateSelector}" Margin="360,247,376,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="3" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
+
+        <Button Content="Seguir" HorizontalAlignment="Left" Margin="1053,8,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30" Height="48" Command="{Binding FollowCommand}" Width="114"/>
+        <Button Content="Parar de Seguir" HorizontalAlignment="Left" Margin="1053,72,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30" Height="48" Width="227" Command="{Binding UnfollowCommand}"/>
+        
+        <ListView ItemsSource="{Binding Followers}" Margin="966,172,0,338">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Button Foreground="{x:Null}" Command="{Binding DataContext.SeeAccountCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}">
                         <StackPanel Orientation="Horizontal">
-                            <Button Content="Like" Command="{Binding DataContext.LikePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}"/>
-                            <Label Content="{Binding LikeCount}"/>
+                            <Image Source="{Binding PicURI}" Width="50" Height="50"/>
+                            <Label Content="{Binding Tag}"/>
                         </StackPanel>
-                    </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                    </Button>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            
+        </ListView>
+        <ListView ItemsSource="{Binding Following}" Margin="966,416,0,94">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Button Foreground="{x:Null}" Command="{Binding DataContext.SeeAccountCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding PicURI}" Width="50" Height="50"/>
+                            <Label Content="{Binding Tag}"/>
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
 
     </Grid>
 </Page>

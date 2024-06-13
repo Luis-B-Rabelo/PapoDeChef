@@ -10,15 +10,14 @@ namespace PapoDeChef.DAO
 {
     public class PostDAO
     {
-        public static uint CreateNormalPost(uint accountIDFK, string accountTagFK, string title, string description)
+        public static uint CreateNormalPost(PreviewAccountModel account, string title, string description)
         {
             try
             {
                 IDictionary<string, object> normalPost = new Dictionary<string, object>
                 {
                     { "ID", DBConn.DB.PostIDCounter++ },
-                    { "AccountIDFK", accountIDFK },
-                    { "AccountTagFK", accountTagFK},
+                    { "Account", account },
                     { "Title", title },
                     { "Description", description },
                     { "WhoLikedID", new List<uint>() },
@@ -51,15 +50,14 @@ namespace PapoDeChef.DAO
             }
         }
 
-        public static uint CreateRecipePost(uint accountIDFK, string accountTagFK, string title, string description, string ingredients, string directions)
+        public static uint CreateRecipePost(PreviewAccountModel account, string title, string description, string ingredients, string directions)
         {
             try
             {
                 IDictionary<string, object> recipePost = new Dictionary<string, object>
                 {
                     { "ID", DBConn.DB.PostIDCounter++ },
-                    { "AccountIDFK", accountIDFK },
-                    { "AccountTagFK", accountTagFK },
+                    { "Account", account },
                     { "Title", title },
                     { "Description", description },
                     { "WhoLikedID", new List<uint>() },
@@ -103,7 +101,7 @@ namespace PapoDeChef.DAO
             {
                 ObservableCollection<IPostModel> accountPosts = new ObservableCollection<IPostModel>();
 
-                List<IDictionary<string, object>> accountPostsDic = DBConn.DB.Posts.AsParallel().Where(post => (uint)post["AccountIDFK"] == accountID).ToList();
+                List<IDictionary<string, object>> accountPostsDic = DBConn.DB.Posts.AsParallel().Where(post => ((PreviewAccountModel)post["Account"]).ID == accountID).ToList();
 
                 foreach (var post in accountPostsDic)
                 {
@@ -131,7 +129,7 @@ namespace PapoDeChef.DAO
                     .Log();
 #endif
 
-                return accountPosts;
+                return new ObservableCollection<IPostModel>(accountPosts.Reverse().ToList());
             }
             catch (Exception ex)
             {
@@ -180,13 +178,73 @@ namespace PapoDeChef.DAO
                     .Log();
 #endif
 
-                return explorePosts;
+                return new ObservableCollection<IPostModel>(explorePosts.Reverse().ToList());
             }
             catch (Exception ex)
             {
 #if DEBUG
                 GlobalNecessities.Logger.ForErrorEvent()
                     .Message("Erro para pegar posts para o Explorar")
+                    .Exception(ex)
+                    .Log();
+#endif
+
+                return null;
+            }
+        }
+
+        public static ObservableCollection<IPostModel> GetHomePosts(List<PreviewAccountModel> following)
+        {
+            try
+            {
+                List<uint> followingIDs = new List<uint>();
+
+                IDictionary<string, object> homePostDic;
+
+                ObservableCollection<IPostModel> homePosts = new ObservableCollection<IPostModel>();
+
+                foreach (PreviewAccountModel account in following) 
+                {
+                    homePostDic = DBConn.DB.Posts.AsParallel().FirstOrDefault(post => ((PreviewAccountModel)post["Account"]).ID == account.ID, null);
+
+                    if (homePostDic != null)
+                    {
+                        IPostModel postModel;
+
+                        if (!(bool)homePostDic["IsRecipePost"])
+                        {
+                            postModel = new PostModel();
+                            postModel.SetPostModel(homePostDic);
+                        }
+                        else
+                        {
+                            postModel = new RecipePostModel();
+                            postModel.SetPostModel(homePostDic);
+                        }
+
+#if DEBUG
+                        GlobalNecessities.Logger.Debug("Adicionando Post para mostrar no Home");
+#endif
+
+                        homePosts.Add(postModel);
+                    }
+
+                }
+
+#if DEBUG
+                GlobalNecessities.Logger.ForDebugEvent()
+                    .Message("Pegando posts para o Home")
+                    .Property("Posts", homePosts)
+                    .Log();
+#endif
+
+                return new ObservableCollection<IPostModel>(homePosts.Reverse().ToList());
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                GlobalNecessities.Logger.ForErrorEvent()
+                    .Message("Erro para pegar posts para o Home")
                     .Exception(ex)
                     .Log();
 #endif
@@ -247,7 +305,7 @@ namespace PapoDeChef.DAO
             }
         }
 
-        public static bool CommentOnNormalPost(uint postID, string accountTag, string comment) 
+        public static bool CommentOnNormalPost(uint postID, PreviewAccountModel account, string comment) 
         {
             try
             {
@@ -255,8 +313,11 @@ namespace PapoDeChef.DAO
 
                 ObservableCollection<CommentModel> temporaryList = (ObservableCollection<CommentModel>)DBConn.DB.Posts[postIndex]["Comments"];
                 CommentModel commentModel = new CommentModel();
-                commentModel.SetNormalComment(accountTag, comment);
+                commentModel.SetNormalComment(account, comment);
+
                 temporaryList.Add(commentModel);
+
+
                 DBConn.DB.Posts[postIndex]["Comments"] = temporaryList;
                 temporaryList = null;
 
@@ -264,7 +325,7 @@ namespace PapoDeChef.DAO
                 GlobalNecessities.Logger.ForDebugEvent()
                     .Message("Adicionando comentário ao post")
                     .Property("PostID", postID)
-                    .Property("AccountTag", accountTag)
+                    .Property("Account", account)
                     .Property("Comentário", comment)
                     .Log();
 #endif
@@ -277,7 +338,7 @@ namespace PapoDeChef.DAO
                 GlobalNecessities.Logger.ForErrorEvent()
                     .Message("Erro para adicionar comentário ao post")
                     .Property("PostID", postID)
-                    .Property("AccountTag", accountTag)
+                    .Property("AccountTag", account)
                     .Property("Comentário", comment)
                     .Exception(ex)
                     .Log();
@@ -286,7 +347,7 @@ namespace PapoDeChef.DAO
             }
         }
 
-        public static bool CommentOnRecipePost(uint postID, string accountTag, string comment, byte rating)
+        public static bool CommentOnRecipePost(uint postID, PreviewAccountModel account, string comment, byte rating)
         {
             try
             {
@@ -294,8 +355,10 @@ namespace PapoDeChef.DAO
 
                 ObservableCollection<CommentModel> temporaryList = (ObservableCollection<CommentModel>)DBConn.DB.Posts[postIndex]["Comments"];
                 CommentModel commentModel = new CommentModel();
-                commentModel.SetRecipeComment(accountTag, comment, rating);
+                commentModel.SetRecipeComment(account, comment, rating);
+
                 temporaryList.Add(commentModel);
+
                 DBConn.DB.Posts[postIndex]["Comments"] = temporaryList;
                 DBConn.DB.Posts[postIndex]["SumOfRatings"] = (uint)DBConn.DB.Posts[postIndex]["SumOfRatings"] + rating;
                 DBConn.DB.Posts[postIndex]["Ratings"] = (uint)DBConn.DB.Posts[postIndex]["Ratings"] + 1;
@@ -307,7 +370,7 @@ namespace PapoDeChef.DAO
                 GlobalNecessities.Logger.ForDebugEvent()
                     .Message("Adicionando comentário ao post")
                     .Property("PostID", postID)
-                    .Property("AccountTag", accountTag)
+                    .Property("AccountTag", account)
                     .Property("Comentário", comment)
                     .Log();
 #endif
@@ -320,7 +383,7 @@ namespace PapoDeChef.DAO
                 GlobalNecessities.Logger.ForErrorEvent()
                     .Message("Erro para adicionar comentário ao post")
                     .Property("PostID", postID)
-                    .Property("AccountTag", accountTag)
+                    .Property("AccountTag", account)
                     .Property("Comentário", comment)
                     .Exception(ex)
                     .Log();
@@ -329,6 +392,7 @@ namespace PapoDeChef.DAO
             }
         }
 
+        /*
         private static IDictionary<string, object> NormalPostModelToDictionary(PostModel normalPostModel)
         {
             try
@@ -336,7 +400,7 @@ namespace PapoDeChef.DAO
                 IDictionary<string, object> dictionaryPost = new Dictionary<string, object>
                 {
                     { "ID", normalPostModel.ID },
-                    { "AccountIDFK", normalPostModel.AccountIDFK},
+                    { "Account", normalPostModel.Account},
                     { "Title", normalPostModel.Title },
                     { "Description", normalPostModel.Description },
                     { "WhoLikedID", normalPostModel.WhoLikedID },
@@ -412,7 +476,7 @@ namespace PapoDeChef.DAO
 #endif
                 return null;
             }
-        }
+        }*/
 
     }
 }

@@ -21,10 +21,7 @@ namespace PapoDeChef.MVVM.Models
         public IPostModel Post { get; }
         public uint ID { get;}
 
-        public uint AccountIDFK { get; }
-
-        public string AccountTagFK { get; }
-
+        public PreviewAccountModel Account { get; }
         public string Title { get; }
 
         public string Description { get; }
@@ -34,8 +31,6 @@ namespace PapoDeChef.MVVM.Models
         public uint LikeCount { get; }
 
         public bool IsRecipePost { get; }
-
-        public ImageSource PicURI { get; }
 
         public ImageSource PostImgURI { get; }
 

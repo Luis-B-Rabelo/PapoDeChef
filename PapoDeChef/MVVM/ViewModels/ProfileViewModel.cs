@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.Input;
 using PapoDeChef.MVVM.Models;
+using PapoDeChef.Events;
 
 namespace PapoDeChef.MVVM.ViewModels
 {
@@ -35,6 +36,21 @@ namespace PapoDeChef.MVVM.ViewModels
         public IList<IPostModel> AccountPosts
         {
             get => _accountPosts;
+        }
+
+        public uint ID
+        {
+            get
+            {
+                if (_account != null)
+                {
+                    return _account.ID;
+                }
+                else
+                {
+                    return 0;
+                }
+            }
         }
 
         public string Tag
@@ -97,7 +113,7 @@ namespace PapoDeChef.MVVM.ViewModels
             }
         }
 
-        public List<uint> Followers 
+        public List<PreviewAccountModel> Followers 
         { 
             get
             {
@@ -107,7 +123,7 @@ namespace PapoDeChef.MVVM.ViewModels
                 }
                 else
                 {
-                    return new List<uint>(); 
+                    return new List<PreviewAccountModel>(); 
                 }
             }
         }
@@ -127,7 +143,7 @@ namespace PapoDeChef.MVVM.ViewModels
             }
         }
 
-        public List<uint> Following
+        public List<PreviewAccountModel> Following
         {
             get
             {
@@ -137,7 +153,7 @@ namespace PapoDeChef.MVVM.ViewModels
                 }
                 else
                 {
-                    return new List<uint>();
+                    return new List<PreviewAccountModel>();
                 }
             }
         }
@@ -184,9 +200,59 @@ namespace PapoDeChef.MVVM.ViewModels
         }
 
         [RelayCommand]
-        public void FollowUser()
+        public void SeePost(IPostModel post)
         {
+            NavigationEvent.Parameters = new Dictionary<string, object>
+            {
+                {"Post", post }
+            };
+            NavigationEvent.NavigateTo(nameof(PostViewModel));
+        }
 
+        [RelayCommand]
+        public void Follow()
+        {
+            PreviewAccountModel follow = new PreviewAccountModel
+            {
+                ID = this.ID,
+                Tag = this.Tag
+            };
+
+            PreviewAccountModel follower = new PreviewAccountModel
+            {
+                ID = Session.AccountSession.ID,
+                Tag = Session.AccountSession.Tag
+            };
+
+            AccountDAO.FollowAccount(follow, follower);
+        }
+
+        [RelayCommand]
+        public void Unfollow()
+        {
+            PreviewAccountModel follow = new PreviewAccountModel
+            {
+                ID = this.ID,
+                Tag = this.Tag
+            };
+
+            PreviewAccountModel follower = new PreviewAccountModel
+            {
+                ID = Session.AccountSession.ID,
+                Tag = Session.AccountSession.Tag
+            };
+
+            AccountDAO.UnfollowAccount(follow, follower);
+        }
+
+        [RelayCommand]
+        public void SeeAccount(uint accountID)
+        {
+            NavigationEvent.Parameters = new Dictionary<string, object>
+            {
+                {"ID", accountID }
+            };
+            NavigationEvent.NavigateTo(nameof(ProfileViewModel));
         }
         #endregion
     }

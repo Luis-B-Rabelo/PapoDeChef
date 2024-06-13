@@ -1,8 +1,11 @@
-﻿using FoodSocialMedia.MVVM.Models;
+﻿using Aspose.Words.Bibliography;
+using FoodSocialMedia.MVVM.Models;
 using NLog;
 using PapoDeChef.Core;
 using PapoDeChef.Database;
-using System.Security.Principal;
+using PapoDeChef.MVVM.Models;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace PapoDeChef.DAO
 {
@@ -27,9 +30,9 @@ namespace PapoDeChef.DAO
                 { "Email", email },
                 { "Bio", string.Empty },
                 { "QntFollowers", (uint)0 },
-                { "Followers", new List<uint>() },
+                { "Followers", new List<PreviewAccountModel>() },
                 { "QntFollowing", (uint)0 },
-                { "Following", new List<uint>()},
+                { "Following", new List<PreviewAccountModel>()},
                 { "AccessLevel", (byte)0 },
                 { "CreationDate", DateOnly.Parse(DateTime.Today.ToString("d")) },
                 { "Birthdate", new DateOnly() }
@@ -40,7 +43,10 @@ namespace PapoDeChef.DAO
 #if DEBUG
                     GlobalNecessities.Logger.Debug("Criando conta");
 #endif
-                    DBConn.DB.LoginInfo.Add(tag, password);
+
+                    string hashedPassword = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
+
+                    DBConn.DB.LoginInfo.Add(tag, hashedPassword);
                     DBConn.DB.Accounts.Add(savedAccount);
 
 #if DEBUG
@@ -77,7 +83,9 @@ namespace PapoDeChef.DAO
 
         public static uint ConfirmAccount(string tag, string password)
         {
-            KeyValuePair<string, string> loginInfo = new KeyValuePair<string, string>(tag, password);
+            string hashedPassword = Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(password)));
+
+            KeyValuePair<string, string> loginInfo = new KeyValuePair<string, string>(tag, hashedPassword);
 
             IDictionary<string, object> acc = null;
 
@@ -88,7 +96,7 @@ namespace PapoDeChef.DAO
                 .Log();
 #endif
 
-            if (DBConn.DB.LoginInfo.Contains(loginInfo))
+            if (DBConn.DB.LoginInfo.AsParallel().Contains(loginInfo))
             {
                 acc = DBConn.DB.Accounts.First(acc => (string)acc["Tag"] == tag);
 
@@ -236,38 +244,38 @@ namespace PapoDeChef.DAO
             }
         }
 
-        public static bool FollowAccount(uint followID, uint followerID)
+        public static bool FollowAccount(PreviewAccountModel followAccount, PreviewAccountModel followerAccount)
         {
             try
             {
                 int index; 
-                List<uint> follow;
+                List<PreviewAccountModel> follow;
 
-                index = DBConn.DB.Accounts.FindIndex(acc => (uint)acc["ID"] == followID);
+                index = DBConn.DB.Accounts.FindIndex(acc => (uint)acc["ID"] == followAccount.ID);
 
 
                 DBConn.DB.Accounts[index]["QntFollowers"] = (uint)DBConn.DB.Accounts[index]["QntFollowers"] + 1;
 
-                follow = (List<uint>)DBConn.DB.Accounts[index]["Followers"];
+                follow = (List<PreviewAccountModel>)DBConn.DB.Accounts[index]["Followers"];
 
-                follow.Add(followerID);
+                follow.Add(followerAccount);
 
                 DBConn.DB.Accounts[index]["Followers"] = follow;
 
-                index = DBConn.DB.Accounts.FindIndex(acc => (uint)acc["ID"] == followerID);
+                index = DBConn.DB.Accounts.FindIndex(acc => (uint)acc["ID"] == followerAccount.ID);
 
                 DBConn.DB.Accounts[index]["QntFollowing"] = (uint)DBConn.DB.Accounts[index]["QntFollowing"] + 1;
 
-                follow = (List<uint>)DBConn.DB.Accounts[index]["Following"];
-                follow.Add(followID);
+                follow = (List<PreviewAccountModel>)DBConn.DB.Accounts[index]["Following"];
+                follow.Add(followAccount);
 
                 DBConn.DB.Accounts[index]["Following"] = follow;
 
 #if DEBUG
                 GlobalNecessities.Logger.ForDebugEvent()
                     .Message("Conta começou a seguir outra")
-                    .Property("FollowerID", followerID)
-                    .Property("FollowingID", followID)
+                    .Property("FollowerID", followerAccount)
+                    .Property("FollowingID", followAccount)
                     .Log();
 #endif
 
@@ -278,8 +286,8 @@ namespace PapoDeChef.DAO
 #if DEBUG
                 GlobalNecessities.Logger.ForErrorEvent()
                     .Message("Conta não conseguiu começar a seguir outra")
-                    .Property("FollowerID", followerID)
-                    .Property("FollowingID", followID)
+                    .Property("FollowerID", followerAccount)
+                    .Property("FollowingID", followAccount)
                     .Exception(ex)
                     .Log();
 #endif
@@ -287,36 +295,38 @@ namespace PapoDeChef.DAO
             }
         }
 
-        public static bool UnfollowAccount(uint followID, uint followerID)
+        public static bool UnfollowAccount(PreviewAccountModel followAccount, PreviewAccountModel followerAccount)
         {
             try
             {
                 int index;
-                List<uint> follow;
+                List<PreviewAccountModel> follow;
 
-                index = DBConn.DB.Accounts.FindIndex(acc => (uint)acc["ID"] == followID);
+                index = DBConn.DB.Accounts.FindIndex(acc => (uint)acc["ID"] == followAccount.ID);
+
 
                 DBConn.DB.Accounts[index]["QntFollowers"] = (uint)DBConn.DB.Accounts[index]["QntFollowers"] - 1;
 
-                follow = (List<uint>)DBConn.DB.Accounts[index]["Followers"];
-                follow.Remove(followerID);
+                follow = (List<PreviewAccountModel>)DBConn.DB.Accounts[index]["Followers"];
+
+                follow.Remove(followerAccount);
 
                 DBConn.DB.Accounts[index]["Followers"] = follow;
 
-                index = DBConn.DB.Accounts.FindIndex(acc => (uint)acc["ID"] == followerID);
+                index = DBConn.DB.Accounts.FindIndex(acc => (uint)acc["ID"] == followerAccount.ID);
 
                 DBConn.DB.Accounts[index]["QntFollowing"] = (uint)DBConn.DB.Accounts[index]["QntFollowing"] - 1;
 
-                follow = (List<uint>)DBConn.DB.Accounts[index]["Following"];
-                follow.Remove(followID);
+                follow = (List<PreviewAccountModel>)DBConn.DB.Accounts[index]["Following"];
+                follow.Remove(followAccount);
 
                 DBConn.DB.Accounts[index]["Following"] = follow;
 
 #if DEBUG
                 GlobalNecessities.Logger.ForDebugEvent()
                     .Message("Conta parou de seguir outra")
-                    .Property("FollowerID", followerID)
-                    .Property("FollowingID", followID)
+                    .Property("FollowerID", followerAccount)
+                    .Property("FollowingID", followAccount)
                     .Log();
 #endif
 
@@ -327,8 +337,8 @@ namespace PapoDeChef.DAO
 #if DEBUG
                 GlobalNecessities.Logger.ForErrorEvent()
                     .Message("Conta não conseguiu parar de seguir outra")
-                    .Property("FollowerID", followerID)
-                    .Property("FollowingID", followID)
+                    .Property("FollowerID", followerAccount)
+                    .Property("FollowingID", followAccount)
                     .Exception(ex)
                     .Log();
 #endif

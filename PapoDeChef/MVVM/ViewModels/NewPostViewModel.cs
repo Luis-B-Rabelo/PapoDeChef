@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media;
 using Aspose.Words.Drawing;
 using System.IO;
+using PapoDeChef.MVVM.Models;
 
 namespace PapoDeChef.MVVM.ViewModels
 {
@@ -151,13 +152,23 @@ namespace PapoDeChef.MVVM.ViewModels
                 {
                     uint postID = 0;
 
-                    if (_ingredients != null && _directions != null)
+                    PreviewAccountModel account = new PreviewAccountModel
                     {
-                        postID = PostDAO.CreateRecipePost(Session.AccountSession.ID, Session.AccountSession.Tag, Title, Description, Ingredients, Directions);
+                        ID = Session.AccountSession.ID,
+                        Tag = Session.AccountSession.Tag
+                    };
+
+                    if (_ingredients == null && _directions == null)
+                    {
+                        postID = PostDAO.CreateNormalPost(account, Title, Description);
+                    }
+                    else if (_ingredients != null && _directions != null)
+                    {
+                        postID = PostDAO.CreateRecipePost(account, Title, Description, Ingredients, Directions);
                     }
                     else
                     {
-                        postID = PostDAO.CreateNormalPost(Session.AccountSession.ID, Session.AccountSession.Tag, Title, Description);
+                        postID = 0;
                     }
 
                     if (postID != 0)

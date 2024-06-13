@@ -109,10 +109,10 @@ namespace FoodSocialMedia.MVVM.Models
             _name = (string)savedAccount["Name"];
             _bio = (string)savedAccount["Bio"];
 
-            _followers = (List<uint>)savedAccount["Followers"];
+            _followers = (List<PreviewAccountModel>)savedAccount["Followers"];
             _qntFollowers = (uint)savedAccount["QntFollowers"];
 
-            _following = (List<uint>)savedAccount["Following"];
+            _following = (List<PreviewAccountModel>)savedAccount["Following"];
             _qntFollowing = (uint)savedAccount["QntFollowing"];
 
             _accessLevel = (byte)savedAccount["AccessLevel"];

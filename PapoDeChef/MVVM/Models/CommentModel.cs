@@ -1,4 +1,5 @@
 ﻿#region Internal Libs
+using PapoDeChef.MVVM.Models;
 using System.IO;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -17,7 +18,7 @@ namespace FoodSocialMedia.MVVM.Models
 
         #region Properties
 
-        private string _commentedByAccountTag;
+        private PreviewAccountModel _account;
 
         private byte _rating;
 
@@ -29,9 +30,9 @@ namespace FoodSocialMedia.MVVM.Models
 
         #region Getters & Setters
 
-        public string CommentedByAccountTag
+        public PreviewAccountModel Account
         {
-            get => _commentedByAccountTag;
+            get => _account;
         }
 
         public byte Rating
@@ -44,21 +45,6 @@ namespace FoodSocialMedia.MVVM.Models
             get => _comment;
         }
 
-        public ImageSource PicURI
-        {
-            get
-            {
-                if (File.Exists($@"{Environment.CurrentDirectory}\Storage\ProfilePics\{_commentedByAccountTag}.jpg"))
-                {
-                    return new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Storage\ProfilePics\{_commentedByAccountTag}.jpg"));
-                }
-                else
-                {
-                    return new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Storage\ProfilePics\0.jpg"));
-                }
-            }
-        }
-
         public DateTime CommentDateTime
         {
             get => _commentDateTime;
@@ -68,17 +54,17 @@ namespace FoodSocialMedia.MVVM.Models
 
         #region Methods
 
-        public void SetNormalComment(string accountTag, string comment)
+        public void SetNormalComment(PreviewAccountModel account, string comment)
         {
-            _commentedByAccountTag = accountTag;
+            _account = account;
             _rating = 0;
             _comment = comment;
             _commentDateTime = DateTime.Now;
         }
 
-        public void SetRecipeComment(string accountTag, string comment, byte rating)
+        public void SetRecipeComment(PreviewAccountModel account, string comment, byte rating)
         {
-            _commentedByAccountTag = accountTag;
+            _account = account;
             _rating = rating;
             _comment = comment;
             _commentDateTime = DateTime.Now;

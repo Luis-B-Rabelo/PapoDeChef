@@ -2,6 +2,7 @@
 using FoodSocialMedia.MVVM.Models;
 using PapoDeChef.Core;
 using PapoDeChef.DAO;
+using PapoDeChef.Events;
 using PapoDeChef.MVVM.Models;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
@@ -45,11 +46,6 @@ namespace PapoDeChef.MVVM.ViewModels
         public List<uint> WhoLikedID
         {
             get => _post.WhoLikedID;
-        }
-
-        public ImageSource PicURI
-        {
-            get => _post.PicURI;
         }
 
         public ImageSource PostImgURI
@@ -100,20 +96,32 @@ namespace PapoDeChef.MVVM.ViewModels
         [RelayCommand]
         public void CommentOnPost()
         {
-            CommentModel comment = new CommentModel();
+            PreviewAccountModel account = new PreviewAccountModel
+            {
+                ID = Session.AccountSession.ID,
+                Tag = Session.AccountSession.Tag
+            };
 
             if (Rating == null)
             {
-                PostDAO.CommentOnNormalPost(ID, Session.AccountSession.Tag, NewComment);
-                comment.SetNormalComment(Session.AccountSession.Tag, NewComment);
+                PostDAO.CommentOnNormalPost(ID, account, NewComment);
             }
             else
             {
-                PostDAO.CommentOnRecipePost(ID, Session.AccountSession.Tag, NewComment, (byte)_rating);
-                comment.SetRecipeComment(Session.AccountSession.Tag, NewComment, (byte)_rating);
+                PostDAO.CommentOnRecipePost(ID, account, NewComment, (byte)_rating);
             }
 
             NewComment = null;
+        }
+
+        [RelayCommand]
+        public void SeeAccount(uint accountID)
+        {
+            NavigationEvent.Parameters = new Dictionary<string, object>
+            {
+                {"ID", accountID }
+            };
+            NavigationEvent.NavigateTo(nameof(ProfileViewModel));
         }
 
         #endregion

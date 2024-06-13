@@ -10,9 +10,13 @@ namespace PapoDeChef.Database
 
         private List<IDictionary<string, object>> _posts;
 
+        private List<IDictionary<string, object>> _chats;
+
         public uint AccountIDCounter;
 
         public uint PostIDCounter;
+
+        public uint ChatIDCounter;
 
         public IDictionary<string, string> LoginInfo
         {
@@ -29,14 +33,21 @@ namespace PapoDeChef.Database
             get => _posts;
         }
 
+        public List<IDictionary<string, object>> Chats
+        {
+            get => _chats;
+        }
+
         public PapoDeChefDB()
         {
             AccountIDCounter = 1;
             PostIDCounter = 1;
+            ChatIDCounter = 1;
 
             _loginInfo = new Dictionary<string, string>();
             _accounts = new List<IDictionary<string, object>>();
             _posts = new List<IDictionary<string, object>>();
+            _chats = new List<IDictionary<string, object>>();
         }
 
     }

@@ -17,7 +17,7 @@ namespace PapoDeChef.MVVM.ViewModels
 
         #region Getters & Setters
 
-        public IList<IPostModel> ExplorePosts
+        public ObservableCollection<IPostModel> ExplorePosts
         {
             get => _explorePosts;
         }
@@ -50,6 +50,16 @@ namespace PapoDeChef.MVVM.ViewModels
         public void LikePost(uint postID)
         {
             PostDAO.LikePost(postID, Session.AccountSession.ID);
+        }
+
+        [RelayCommand]
+        public void SeeAccount(uint accountID) 
+        {
+            NavigationEvent.Parameters = new Dictionary<string, object>
+            {
+                {"ID", accountID }
+            };
+            NavigationEvent.NavigateTo(nameof(ProfileViewModel));
         }
         #endregion
     }

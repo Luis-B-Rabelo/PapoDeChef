@@ -4,16 +4,77 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PapoDeChef.MVVM.Views"
-      xmlns:Templates="clr-namespace:PapoDeChef.MVVM.Views.Templates" x:Class="PapoDeChef.MVVM.Views.HomeView"
+      xmlns:templates="clr-namespace:PapoDeChef.MVVM.Views.Templates" x:Class="PapoDeChef.MVVM.Views.HomeView"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1280"
       MinHeight="720" MinWidth="1280"
       Title="HomeView">
 
+    <Page.Resources>
+        <DataTemplate x:Key="NormalPostTemplate">
+            <ListBox ItemsSource="{Binding Post}">
+                <Button Foreground="{x:Null}" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:HomeView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <Button Foreground="{x:Null}" Command="{Binding DataContext.SeeAccountCommand, RelativeSource={RelativeSource AncestorType={x:Type local:HomeView}, Mode=FindAncestor}}" CommandParameter="{Binding Account.ID}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Account.PicURI}" Width="50" Height="50"/>
+                                <Label Content="{Binding Account.Tag}"/>
+                            </StackPanel>
+                        </Button>
+                        <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
+                        <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                        <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Like" Command="{Binding DataContext.LikePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:HomeView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}"/>
+                            <Label Content="{Binding LikeCount}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Button>
+            </ListBox>
+        </DataTemplate>
+
+        <DataTemplate x:Key="RecipePostTemplate">
+            <ListBox ItemsSource="{Binding Post}">
+                <Button Foreground="{x:Null}" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:HomeView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <Button Foreground="{x:Null}" Command="{Binding DataContext.SeeAccountCommand, RelativeSource={RelativeSource AncestorType={x:Type local:HomeView}, Mode=FindAncestor}}" CommandParameter="{Binding Account.ID}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Account.PicURI}" Width="50" Height="50"/>
+                                <Label Content="{Binding Account.Tag}"/>
+                            </StackPanel>
+                        </Button>
+                        <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
+                        <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                        <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Like" Command="{Binding DataContext.LikePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:HomeView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}"/>
+                            <Label Content="{Binding LikeCount}"/>
+                            <Label Content="{Binding Ratings}" Margin="10,0,0,0"/>
+                            <Label Content="{Binding AverageRating}" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Button>
+            </ListBox>
+        </DataTemplate>
+
+        <templates:PostTemplateSelector x:Key="PostTemplateSelector"
+                                        NormalPostTemplate="{StaticResource NormalPostTemplate}"
+                                        RecipePostTemplate="{StaticResource RecipePostTemplate}"/>
+
+    </Page.Resources>
+
     <Grid>
         <Label Content="HomeView" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="80"/>
 
-        <Templates:NavBar HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <templates:NavBar HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+        <ListView ItemsSource="{Binding HomePosts}" ItemTemplateSelector="{StaticResource PostTemplateSelector}" Margin="360,123,342,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="1" HorizontalAlignment="Center"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+        </ListView>
 
     </Grid>
 </Page>

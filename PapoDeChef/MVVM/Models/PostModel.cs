@@ -22,9 +22,7 @@ namespace FoodSocialMedia.MVVM.Models
 
         protected uint _id;
 
-        protected uint _accountIDFK;
-
-        protected string _accountTagFK;
+        protected PreviewAccountModel _account;
 
         protected string _title;
 
@@ -54,15 +52,11 @@ namespace FoodSocialMedia.MVVM.Models
             get => _id;
         }
 
-        public string AccountTagFK
+        public PreviewAccountModel Account
         {
-            get => _accountTagFK;
+            get => _account;
         }
 
-        public uint AccountIDFK
-        {
-            get => _accountIDFK;
-        }
 
         public string Title
         {
@@ -89,21 +83,6 @@ namespace FoodSocialMedia.MVVM.Models
             get => _isRecipePost;
         }
 
-        public ImageSource PicURI
-        {
-            get
-            {
-                if (File.Exists($@"{Environment.CurrentDirectory}\Storage\ProfilePics\{_accountTagFK}.jpg"))
-                {
-                    return new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Storage\ProfilePics\{_accountTagFK}.jpg"));
-                }
-                else
-                {
-                    return new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Storage\ProfilePics\0.jpg"));
-                }
-            }
-        }
-
         public ImageSource PostImgURI
         {
             get => new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Storage\Posts\{_id}.jpg"));
@@ -126,8 +105,7 @@ namespace FoodSocialMedia.MVVM.Models
         public virtual void SetPostModel(IDictionary<string, object> savedPost)
         {
             _id = (uint)savedPost["ID"];
-            _accountIDFK = (uint)savedPost["AccountIDFK"];
-            _accountTagFK = (string)savedPost["AccountTagFK"];
+            _account = (PreviewAccountModel)savedPost["Account"];
             _title = (string)savedPost["Title"];
             _description = (string)savedPost["Description"];
             _whoLikedID = (List<uint>)savedPost["WhoLikedID"];
