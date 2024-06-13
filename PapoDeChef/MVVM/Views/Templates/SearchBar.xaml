@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="PapoDeChef.MVVM.Views.Templates.SearchBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PapoDeChef.MVVM.Views.Templates"
+             DataContext="{Binding SearchBar}"
+             mc:Ignorable="d" 
+             d:DesignHeight="35" d:DesignWidth="375"
+             MinHeight="35" MinWidth="375">
+    
+    <Grid>
+        <Border x:Name="bdrFundo" CornerRadius="20" Height="35" Width="375" BorderBrush="Black" BorderThickness="2" Background="White"/>
+        <Image x:Name="imgLupa" Source="/Resources/Images/IconeLupa.png" Width="20" Height="20" Margin="10,8,345,7"/>
+        <TextBox x:Name="txtBarraDePesquisa" Margin="39,4,17,3" BorderThickness="0" Text="Buscar" VerticalContentAlignment="Center" FontSize="20" LostFocus="txtBarraDePesquisa_LostFocus"/>
+    </Grid>
+</UserControl>

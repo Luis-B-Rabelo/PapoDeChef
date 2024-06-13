@@ -9,6 +9,7 @@
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1280"
       MinHeight="720" MinWidth="1280"
+      Background="White"
       Title="ExploreView">
 
     <Page.Resources>
@@ -61,23 +62,18 @@
     </Page.Resources>
     
     <Grid>
-        <Label Content="ExploreView" HorizontalAlignment="Left" Margin="436,21,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="80"/>
+      
+        <Templates:NavBar HorizontalAlignment="Left"/>
 
-        <templates:NavBar HorizontalAlignment="Left" VerticalAlignment="Center"/>
-
-        <ListView 
-            ItemsSource="{Binding ExplorePosts}" 
-            Margin="320,266,132,0"
-            Height="444" Width="807" 
-            ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-            ScrollViewer.VerticalScrollBarVisibility="Hidden" 
-            ItemTemplateSelector="{StaticResource PostTemplateSelector}">
+        <ListView ItemsSource="{Binding ExplorePosts}" Margin="432,59,432,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="3" HorizontalAlignment="Center"/>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
         </ListView>
+
+        
 
 
     </Grid>
