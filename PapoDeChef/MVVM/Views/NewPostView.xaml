@@ -7,18 +7,58 @@
       xmlns:Templates="clr-namespace:PapoDeChef.MVVM.Views.Templates" x:Class="PapoDeChef.MVVM.Views.NewPostView"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1280"
-      MinHeight="720" MaxHeight="1280"
+      MinHeight="720" MinWidth="1280"
+      Background="White"
       Title="NewPostView">
 
     <Grid>
-        <Label Content="NewPostView" HorizontalAlignment="Center" Margin="0,27,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="80"/>
-        <Image HorizontalAlignment="Left" Height="571" VerticalAlignment="Top" Width="618" Margin="0,145,0,0" Source="{Binding PostImgURI}"/>
-        <Button Content="Escolher Foto" HorizontalAlignment="Left" Margin="218,600,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30" Command="{Binding ChoosePostImageCommand}"/>
-        <TextBox HorizontalAlignment="Left" Margin="890,145,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="232" FontFamily="Arial" FontSize="40" Text="{Binding Title}"/>
-        <TextBox HorizontalAlignment="Left" Margin="890,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="326" Height="164" FontFamily="Arial" FontSize="20" Text="{Binding Description}"/>
-        <TextBox TextWrapping="Wrap" FontFamily="Arial" FontSize="20" Margin="890,389,64,200" Text="{Binding Ingredients}"/>
-        <TextBox TextWrapping="Wrap" FontFamily="Arial" FontSize="20" Margin="890,525,64,64" Text="{Binding Directions}"/>
-        <Button Content="Postar" HorizontalAlignment="Left" Margin="1096,660,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="40" Command="{Binding CompletePostCommand}"/>
+
+        <Border BorderThickness="0,0,0,3" BorderBrush="Black" VerticalAlignment="Top" Height="66" MinHeight="66"/>
+        <Label Content="Criar novo post" Width="424" MinWidth="424" Height="50" MinHeight="50" FontSize="40" HorizontalContentAlignment="Center" FontFamily="Inter" Margin="428,8,428,662"/>
+
+        <Border BorderThickness="0,0,3,0" BorderBrush="Black" Width="640" MinWidth="640" Height="654" MinHeight="654" Margin="0,66,640,0"/>
+        <Image Width="618" MinWidth="618" Height="420" MinHeight="420" Margin="11,108,651,182" Source="{Binding PostImgURI}"/>
+        <Button Content="Escolher Foto" Width="242" MinWidth="242" Height="69" MinHeight="69" Margin="199,556,839,95" FontFamily="Arial" FontSize="30" Command="{Binding ChoosePostImageCommand}">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Border BorderThickness="0,0,0,3" BorderBrush="Black" Width="640" MinWidth="640" Height="58" MinHeight="58" Margin="640,66,0,596"/>
+        <Label Content="Título:" Width="82" MinWidth="82" Height="44" MinHeight="44" FontSize="25" Margin="645,71,553,605" />
+        <TextBox Margin="732,75,42,605" TextWrapping="Wrap" Width="506" MinWidth="506" Height="40" MinHeight="40" FontFamily="Arial" FontSize="40" Text="{Binding Title}"/>
+
+        <Border BorderThickness="0,0,0,3" BorderBrush="Black" Width="640" MinWidth="640" Height="178" MinHeight="58" Margin="640,124,0,418"/>
+        <Label Content="Descrição:" FontSize="25" Width="128" MinWidth="128" Height="43" MinHeight="43" Margin="645,124,507,553" VerticalContentAlignment="Center"/>
+        <TextBox Margin="648,167,8,425" TextWrapping="Wrap" Width="625" MinWidth="625" Height="128" MinHeight="128" FontFamily="Arial" FontSize="20" Text="{Binding Description}"/>
+
+        <Border BorderThickness="0,0,0,3" BorderBrush="Black" Width="640" MinWidth="640" Height="178" MinHeight="178" Margin="640,302,0,240"/>
+        <Label Content="Ingredientes:" FontSize="25" Width="160" MinWidth="160" Height="43" MinHeight="43" Margin="645,302,475,375" VerticalContentAlignment="Center"/>
+        <TextBox TextWrapping="Wrap" FontFamily="Arial" FontSize="20" Width="625" MinWidth="625" Height="125" MinHeight="125" Margin="645,345,10,250" Text="{Binding Ingredients}"/>
+
+        <Label Content="Modo de preparo:" FontSize="25" Width="221" MinWidth="221" Height="43" MinHeight="43" Margin="645,480,414,197" VerticalContentAlignment="Center"/>
+        <TextBox TextWrapping="Wrap" FontFamily="Arial" FontSize="20" Width="625" MinWidth="625" Height="131" MinHeight="131" Margin="645,523,10,66" Text="{Binding Directions}"/>
+
+        <Button Content="Postar" Width="138" MinWidth="138" Height="50" MinHeight="50" Margin="1100,660,42,10" FontFamily="Arial" FontSize="40" Command="{Binding CompletePostCommand}">
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="10"/>
+                    <Setter Property="BorderThickness" Value="0"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+
+        <Button Width="50" MinWidth="50" Height="50" MinHeight="50" Margin="35,8,1195,662" Command="{Binding NavigateToHomeCommand}">
+            <Image Source="/Resources/Images/IconeSeta.png"/>
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="30"/>
+                </Style>
+            </Button.Resources>
+        </Button>
 
     </Grid>
 </Page>
