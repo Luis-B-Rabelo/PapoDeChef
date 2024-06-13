@@ -55,15 +55,15 @@
             </ListBox>
         </DataTemplate>
 
-        <templates:PostTemplateSelector x:Key="PostTemplateSelector" 
-        NormalPostTemplate="{StaticResource NormalPostTemplate}"
-        RecipePostTemplate="{StaticResource RecipePostTemplate}"/>
+        <templates:PostTemplateSelector x:Key="PostTemplateSelector"
+                                        NormalPostTemplate="{StaticResource NormalPostTemplate}"
+                                        RecipePostTemplate="{StaticResource RecipePostTemplate}"/>
 
     </Page.Resources>
     
     <Grid>
       
-        <Templates:NavBar HorizontalAlignment="Left"/>
+        <templates:NavBar HorizontalAlignment="Left"/>
 
         <ListView ItemsSource="{Binding ExplorePosts}" Margin="432,59,432,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView.ItemsPanel>
