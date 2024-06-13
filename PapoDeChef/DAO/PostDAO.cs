@@ -3,13 +3,14 @@ using FoodSocialMedia.MVVM.Models;
 using NLog;
 using PapoDeChef.Core;
 using PapoDeChef.Database;
+using PapoDeChef.MVVM.Models;
 using System.Collections.ObjectModel;
 
 namespace PapoDeChef.DAO
 {
     public class PostDAO
     {
-        public static uint CreateNormalPost(uint accountIDFK, string title, string description)
+        public static uint CreateNormalPost(uint accountIDFK, string accountTagFK, string title, string description)
         {
             try
             {
@@ -17,11 +18,13 @@ namespace PapoDeChef.DAO
                 {
                     { "ID", DBConn.DB.PostIDCounter++ },
                     { "AccountIDFK", accountIDFK },
+                    { "AccountTagFK", accountTagFK},
                     { "Title", title },
                     { "Description", description },
                     { "WhoLikedID", new List<uint>() },
                     { "LikeCount", (uint)0 },
                     { "IsRecipePost", false },
+                    { "Comments", new List<CommentModel>()},
                     { "PostDateTime", DateTime.Now }
                 };
 
@@ -48,7 +51,7 @@ namespace PapoDeChef.DAO
             }
         }
 
-        public static uint CreateRecipePost(uint accountIDFK, string title, string description, string ingredients, string directions)
+        public static uint CreateRecipePost(uint accountIDFK, string accountTagFK, string title, string description, string ingredients, string directions)
         {
             try
             {
@@ -56,15 +59,16 @@ namespace PapoDeChef.DAO
                 {
                     { "ID", DBConn.DB.PostIDCounter++ },
                     { "AccountIDFK", accountIDFK },
+                    { "AccountTagFK", accountTagFK },
                     { "Title", title },
                     { "Description", description },
                     { "WhoLikedID", new List<uint>() },
                     { "LikeCount", (uint)0 },
                     { "IsRecipePost", true },
+                    { "Comments", new List<CommentModel>() },
                     { "PostDateTime", DateTime.Now },
                     { "Ratings", (uint)0 },
                     { "AverageRating", 0.0f },
-                    { "ServingSize", 0 },
                     { "Ingredients", ingredients },
                     { "Directions", directions },
                 };
@@ -92,18 +96,28 @@ namespace PapoDeChef.DAO
             }
         }
 
-        public static ObservableCollection<PostModel> GetAccountPosts(uint accountID)
+        public static ObservableCollection<IPostModel> GetAccountPosts(uint accountID)
         {
             try
             {
-                ObservableCollection<PostModel> accountPosts = new ObservableCollection<PostModel>();
+                ObservableCollection<IPostModel> accountPosts = new ObservableCollection<IPostModel>();
 
                 List<IDictionary<string, object>> accountPostsDic = DBConn.DB.Posts.AsParallel().Where(post => (uint)post["AccountIDFK"] == accountID).ToList();
 
                 foreach (var post in accountPostsDic)
                 {
-                    PostModel postModel = new PostModel();
-                    postModel.SetPostModel(post);
+                    IPostModel postModel;
+
+                    if (!(bool)post["IsRecipePost"])
+                    {
+                        postModel = new PostModel();
+                        postModel.SetPostModel(post);
+                    }
+                    else
+                    {
+                        postModel = new RecipePostModel();
+                        postModel.SetPostModel(post);
+                    }
                     accountPosts.Add(postModel);
                 }
 
@@ -132,18 +146,29 @@ namespace PapoDeChef.DAO
             }
         }
 
-        public static ObservableCollection<PostModel> GetExplorePosts()
+        public static ObservableCollection<IPostModel> GetExplorePosts()
         {
             try
             {
-                ObservableCollection<PostModel> explorePosts = new ObservableCollection<PostModel>();
+                ObservableCollection<IPostModel> explorePosts = new ObservableCollection<IPostModel>();
 
                 List<IDictionary<string, object>> explorePostsDic = DBConn.DB.Posts.AsParallel().Take(30).ToList();
 
                 foreach (var post in explorePostsDic)
                 {
-                    PostModel postModel = new PostModel();
-                    postModel.SetPostModel(post);
+                    IPostModel postModel;
+
+                    if (!(bool)post["IsRecipePost"])
+                    {
+                        postModel = new PostModel();
+                        postModel.SetPostModel(post);
+                    }
+                    else
+                    {
+                        postModel = new RecipePostModel();
+                        postModel.SetPostModel(post);
+                    }
+
                     explorePosts.Add(postModel);
                 }
 
@@ -175,19 +200,35 @@ namespace PapoDeChef.DAO
             {
                 int postIndex = DBConn.DB.Posts.FindIndex(post => (uint)post["ID"] == postID);
 
-                DBConn.DB.Posts[postIndex]["LikeCount"] = (uint)DBConn.DB.Posts[postIndex]["LikeCount"] + 1;
                 List<uint> temporaryList = (List<uint>)DBConn.DB.Posts[postIndex]["WhoLikedID"];
-                temporaryList.Add(accountID);
+
+                if(!temporaryList.Contains(accountID) || temporaryList.Count == 0) 
+                {
+                    DBConn.DB.Posts[postIndex]["LikeCount"] = (uint)DBConn.DB.Posts[postIndex]["LikeCount"] + 1;
+                    temporaryList.Add(accountID);
+#if DEBUG
+                    GlobalNecessities.Logger.ForDebugEvent()
+                        .Message("Adicionando like do post")
+                        .Property("PostID", postID)
+                        .Property("AccountID", accountID)
+                        .Log();
+#endif
+                }
+                else
+                {
+                    DBConn.DB.Posts[postIndex]["LikeCount"] = (uint)DBConn.DB.Posts[postIndex]["LikeCount"] - 1;
+                    temporaryList.Remove(accountID);
+#if DEBUG
+                    GlobalNecessities.Logger.ForDebugEvent()
+                        .Message("Removendo like do post")
+                        .Property("PostID", postID)
+                        .Property("AccountID", accountID)
+                        .Log();
+#endif
+                }
+
                 DBConn.DB.Posts[postIndex]["WhoLikedID"] = temporaryList;
                 temporaryList = null;
-
-#if DEBUG
-                GlobalNecessities.Logger.ForDebugEvent()
-                    .Message("Adicionando like ao post")
-                    .Property("PostID", postID)
-                    .Property("AccountID", accountID)
-                    .Log();
-#endif
 
                 return true;
             }
@@ -198,6 +239,84 @@ namespace PapoDeChef.DAO
                     .Message("Erro para adicionar like ao post")
                     .Property("PostID", postID)
                     .Property("AccountID", accountID)
+                    .Exception(ex)
+                    .Log();
+#endif
+                return false;
+            }
+        }
+
+        public static bool CommentOnNormalPost(uint postID, string accountTag, string comment) 
+        {
+            try
+            {
+                int postIndex = DBConn.DB.Posts.FindIndex(post => (uint)post["ID"] == postID);
+
+                List<CommentModel> temporaryList = (List<CommentModel>)DBConn.DB.Posts[postIndex]["Comments"];
+                CommentModel commentModel = new CommentModel();
+                commentModel.SetNormalComment(accountTag, comment);
+                temporaryList.Add(commentModel);
+                DBConn.DB.Posts[postIndex]["Comments"] = temporaryList;
+                temporaryList = null;
+
+#if DEBUG
+                GlobalNecessities.Logger.ForDebugEvent()
+                    .Message("Adicionando comentário ao post")
+                    .Property("PostID", postID)
+                    .Property("AccountTag", accountTag)
+                    .Property("Comentário", comment)
+                    .Log();
+#endif
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                GlobalNecessities.Logger.ForErrorEvent()
+                    .Message("Erro para adicionar comentário ao post")
+                    .Property("PostID", postID)
+                    .Property("AccountTag", accountTag)
+                    .Property("Comentário", comment)
+                    .Exception(ex)
+                    .Log();
+#endif
+                return false;
+            }
+        }
+
+        public static bool CommentOnRecipePost(uint postID, string accountTag, string comment, byte rating)
+        {
+            try
+            {
+                int postIndex = DBConn.DB.Posts.FindIndex(post => (uint)post["ID"] == postID);
+
+                List<CommentModel> temporaryList = (List<CommentModel>)DBConn.DB.Posts[postIndex]["Comments"];
+                CommentModel commentModel = new CommentModel();
+                commentModel.SetNormalComment(accountTag, comment);
+                temporaryList.Add(commentModel);
+                DBConn.DB.Posts[postIndex]["Comments"] = temporaryList;
+                temporaryList = null;
+
+#if DEBUG
+                GlobalNecessities.Logger.ForDebugEvent()
+                    .Message("Adicionando comentário ao post")
+                    .Property("PostID", postID)
+                    .Property("AccountTag", accountTag)
+                    .Property("Comentário", comment)
+                    .Log();
+#endif
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+#if DEBUG
+                GlobalNecessities.Logger.ForErrorEvent()
+                    .Message("Erro para adicionar comentário ao post")
+                    .Property("PostID", postID)
+                    .Property("AccountTag", accountTag)
+                    .Property("Comentário", comment)
                     .Exception(ex)
                     .Log();
 #endif
@@ -263,7 +382,6 @@ namespace PapoDeChef.DAO
                     { "PostDateTime", recipePostModel.PostDateTime },
                     { "Ratings", recipePostModel.Ratings },
                     { "AverageRating", recipePostModel.AverageRating },
-                    { "ServingSize", recipePostModel.Servings },
                     { "Ingredients", recipePostModel.Ingredients },
                     { "Diretions", recipePostModel.Directions },
                 };

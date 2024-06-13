@@ -4,15 +4,65 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:PapoDeChef.MVVM.Views"
-      xmlns:Templates="clr-namespace:PapoDeChef.MVVM.Views.Templates" x:Class="PapoDeChef.MVVM.Views.ExploreView"
+      xmlns:templates="clr-namespace:PapoDeChef.MVVM.Views.Templates" 
+      x:Class="PapoDeChef.MVVM.Views.ExploreView"
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1280"
       MinHeight="720" MinWidth="1280"
       Background="White"
       Title="ExploreView">
 
-    <Grid>
+    <Page.Resources>
+        <DataTemplate x:Key="NormalPostTemplate">
+            <ListBox ItemsSource="{Binding Post}">
+                <Button Foreground="{x:Null}" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ExploreView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding PicURI}" Width="50" Height="50"/>
+                            <Label Content="{Binding AccountTagFK}"/>
+                        </StackPanel>
+                        <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
+                        <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                        <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Like" Command="{Binding DataContext.LikePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ExploreView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}"/>
+                            <Label Content="{Binding LikeCount}"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Button>
+            </ListBox>
+        </DataTemplate>
 
+        <DataTemplate x:Key="RecipePostTemplate">
+            <ListBox ItemsSource="{Binding Post}">
+                <Button Foreground="{x:Null}" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ExploreView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding PicURI}" Width="50" Height="50"/>
+                            <Label Content="{Binding AccountTagFK}"/>
+                        </StackPanel>
+                        <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
+                        <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
+                        <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Content="Like" Command="{Binding DataContext.LikePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ExploreView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}"/>
+                            <Label Content="{Binding LikeCount}"/>
+                            <Label Content="{Binding Ratings}" Margin="10,0,0,0"/>
+                            <Label Content="{Binding AverageRating}" Margin="10,0,0,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Button>
+            </ListBox>
+        </DataTemplate>
+
+        <templates:PostTemplateSelector x:Key="PostTemplateSelector" 
+        NormalPostTemplate="{StaticResource NormalPostTemplate}"
+        RecipePostTemplate="{StaticResource RecipePostTemplate}"/>
+
+    </Page.Resources>
+    
+    <Grid>
+      
         <Templates:NavBar HorizontalAlignment="Left"/>
 
         <ListView ItemsSource="{Binding ExplorePosts}" Margin="432,59,432,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
@@ -21,21 +71,6 @@
                     <UniformGrid Columns="3" HorizontalAlignment="Center"/>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Button Foreground="{x:Null}" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ExploreView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
-                        <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                            <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
-                            <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
-                            <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
-                            <StackPanel Orientation="Horizontal">
-                                <Button Content="Like" Command="{Binding DataContext.LikePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ExploreView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}"/>
-                                <Label Content="{Binding LikeCount}"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </Button>
-                </DataTemplate>
-            </ListView.ItemTemplate>
         </ListView>
 
         

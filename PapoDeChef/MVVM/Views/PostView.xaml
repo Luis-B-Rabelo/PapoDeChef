@@ -16,21 +16,24 @@
         <ListView ItemsSource="{Binding Comments}" Margin="855,123,37,132" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="3" HorizontalAlignment="Center"/>
+                    <UniformGrid Columns="1" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-                        <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
-                        <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
-                        <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical">
+                            <Image Source="{Binding PicURI}" Width="50" Height="50"/>
+                            <Label Content="{Binding CommentedByAccountTag}"/>
+                        </StackPanel>
+                        <TextBlock FontFamily="Arial" FontSize="20" Text="{Binding Comment}"/>
                     </StackPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <TextBox HorizontalAlignment="Left" Margin="950,618,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="293" FontFamily="Arial" FontSize="30" Height="92"/>
-        <Button Content="Like" Command="{Binding LikePostCommand}" CommandParameter="{Binding ID}" FontFamily="Arial" FontSize="30" Margin="855,618,335,10"/>
+        <TextBox HorizontalAlignment="Left" Margin="855,618,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="293" FontFamily="Arial" FontSize="30" Height="92" Text="{Binding NewComment}"/>
+        <Button Content="Like" Command="{Binding LikePostCommand}" CommandParameter="{Binding ID}" FontFamily="Arial" FontSize="30" Margin="739,618,451,10"/>
+        <Button Content="Comentar" HorizontalAlignment="Left" Margin="1166,618,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="20" Height="92" Command="{Binding CommentOnPostCommand}"/>
 
 
     </Grid>

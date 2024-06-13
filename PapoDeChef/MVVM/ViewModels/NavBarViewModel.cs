@@ -33,7 +33,7 @@ namespace PapoDeChef.MVVM.ViewModels
             {
                 if (File.Exists($@"{Environment.CurrentDirectory}\Storage\ProfilePics\{Session.AccountSession.Tag}.jpg"))
                 {
-                    return new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Storage\ProfilePics\{Session.AccountSession.Tag}.jpg")).Clone();
+                    return new BitmapImage(new Uri($@"{Environment.CurrentDirectory}\Storage\ProfilePics\{Session.AccountSession.Tag}.jpg"));
                 }
                 else
                 {

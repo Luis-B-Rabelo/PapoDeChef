@@ -62,7 +62,7 @@ namespace FoodSocialMedia.MVVM.Models
 
             _ratings = (uint)savedPost["Ratings"];
             _averageRating = (float)savedPost["AverageRating"];
-            _servings = (byte)savedPost["Servings"];
+            //_servings = (byte)savedPost["Servings"];
             _ingredients = (string)savedPost["Ingredients"];
             _directions = (string)savedPost["Directions"];
         }
