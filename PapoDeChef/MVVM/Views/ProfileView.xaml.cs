@@ -24,5 +24,7 @@ namespace PapoDeChef.MVVM.Views
         {
             InitializeComponent();
         }
+
+       
     }
 }

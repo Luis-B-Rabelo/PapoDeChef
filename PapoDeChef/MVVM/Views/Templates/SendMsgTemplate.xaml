@@ -1,0 +1,32 @@
+﻿<Page x:Class="FoodSocialMedia.MVVM.Views.Templates.SendMsgTemplate"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:PapoDeChef.MVVM.Views.Templates"
+      mc:Ignorable="d" 
+      d:DesignHeight="720" d:DesignWidth="58"
+      Title="SendMsgTemplate">
+
+    <Grid Background="White">
+        <Image Margin="-26,-20,-26,624" Source="/Resources/Images/MaskGroup.png" Stretch="Fill"/>
+        <Button  HorizontalAlignment="Center" Height="50" Margin="0,154,0,0" VerticalAlignment="Top" Width="58" Background="White" BorderBrush="White">
+            <Image Source="/Resources/Images/ic_round-home.png"/>
+        </Button>
+        <Button  HorizontalAlignment="Center" Height="50" Margin="0,204,0,0" VerticalAlignment="Top" Width="58" Background="White" BorderBrush="White">
+            <Image Source="/Resources/Images/foundation_magnifying-glass.png"/>
+        </Button>
+        <Button  HorizontalAlignment="Center" Height="50" Margin="0,259,0,0" VerticalAlignment="Top" Width="58" Background="White" BorderBrush="White">
+            <Image Source="/Resources/Images/Group.png"/>
+        </Button>
+        <Button  HorizontalAlignment="Center" Height="50" Margin="0,309,0,0" VerticalAlignment="Top" Width="58" Background="White" BorderBrush="White">
+            <Image Source="/Resources/Images/gridicons_create.png"/>
+        </Button>
+        <Button  HorizontalAlignment="Center" Height="50" Margin="0,359,0,0" VerticalAlignment="Top" Width="58" Background="White" BorderBrush="White">
+            <Image Source="/Resources/Images/profile pic.png"/>
+        </Button>
+        <Button  HorizontalAlignment="Center" Height="50" Margin="0,639,0,0" VerticalAlignment="Top" Width="58" Background="White" BorderBrush="White">
+            <Image Source="/Resources/Images/gravity-ui_gear.png"/>
+        </Button>
+    </Grid>
+</Page>

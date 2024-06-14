@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace PapoDeChef.MVVM.Views.Templates
+namespace FoodSocialMedia.MVVM.Views.Templates
 {
     /// <summary>
-    /// Interação lógica para SearchBar.xam
+    /// Interação lógica para SendMsgTemplate.xam
     /// </summary>
-    public partial class SearchBar : UserControl
+    public partial class SendMsgTemplate : Page
     {
-        public SearchBar()
+        public SendMsgTemplate()
         {
             InitializeComponent();
         }

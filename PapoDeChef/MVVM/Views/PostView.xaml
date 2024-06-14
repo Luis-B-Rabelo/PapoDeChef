@@ -8,15 +8,23 @@
       d:DesignHeight="720" d:DesignWidth="1280"
       MinHeight="720" MinWidth="1280"
       Title="PostView">
+    
+  
+    <Grid Background="White">
+        <Image HorizontalAlignment="Left" Height="552" Margin="57,61,0,0" VerticalAlignment="Top" Width="618" Source="{Binding PostImgURI}"/>
 
-    <Grid>
-        <Label Content="PostView" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="80"/>
-        <Image HorizontalAlignment="Left" Height="552" Margin="53,123,0,0" VerticalAlignment="Top" Width="618" Source="{Binding PostImgURI}"/>
+        <ListView ItemsSource="{Binding Comments}" 
+                  Margin="0,0,70,0" 
+                  ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                  HorizontalAlignment="Right"
+                  VerticalAlignment="Center"
+                   Height="583" Width="400">
 
-        <ListView ItemsSource="{Binding Comments}" Margin="855,123,37,132" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+            <!-- Tamanho fixo -->
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="1" VerticalAlignment="Top" HorizontalAlignment="Stretch"/>
+                    <UniformGrid Columns="1" VerticalAlignment="Center" HorizontalAlignment="Right"/>
                 </ItemsPanelTemplate>
             </ListView.ItemsPanel>
             <ListView.ItemTemplate>
@@ -33,11 +41,20 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        
-        <TextBox HorizontalAlignment="Left" Margin="855,618,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="293" FontFamily="Arial" FontSize="30" Height="92" Text="{Binding NewComment}"/>
-        <Button Content="Like" Command="{Binding LikePostCommand}" CommandParameter="{Binding ID}" FontFamily="Arial" FontSize="30" Margin="739,618,451,10"/>
-        <Button Content="Comentar" HorizontalAlignment="Left" Margin="1166,618,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="20" Height="92" Command="{Binding CommentOnPostCommand}"/>
-
-
+        <Button VerticalAlignment="Top"  HorizontalAlignment="Left" Width="50" MinWidth="50" Height="50" MinHeight="50" Margin="35,8,1195,662" Command="{Binding NavigateToHomeCommand}">
+            <Image Source="/Resources/Images/IconeSeta.png"/>
+            <Button.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="30"/>
+                </Style>
+            </Button.Resources>
+        </Button>
+        <TextBox HorizontalAlignment="Right" Margin="0,0,112,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="329" FontFamily="Arial" FontSize="30" Height="92" Text="{Binding NewComment}"/>
+        <Button   VerticalAlignment="Bottom" HorizontalAlignment="Right"  Command="{Binding LikePostCommand}" CommandParameter="{Binding ID}" FontFamily="Arial" FontSize="30" Margin="0,0,463,37" Background="White" BorderBrush="White">
+            <Image Source="/Resources/Images/Like.png" Height="39" Width="47" OpacityMask="White"/>
+        </Button>
+        <Button VerticalAlignment="Bottom"  HorizontalAlignment="Right" Margin="0,0,42,37"  FontFamily="Arial" FontSize="20" Height="43" Command="{Binding CommentOnPostCommand}" Width="56" Background="White" BorderBrush="White">
+            <Image Source="/Resources/Images/uil_message.png"/>
+        </Button>
     </Grid>
 </Page>

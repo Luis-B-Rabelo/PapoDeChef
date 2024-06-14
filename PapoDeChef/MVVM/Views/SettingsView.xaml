@@ -10,16 +10,142 @@
       d:DesignHeight="720" d:DesignWidth="1280"
       MinHeight="720" MinWidth="1280"
       Title="SettingsView">
+    <Page.Resources>
+        <!-- Estilo para TextBox arredondado -->
+        <Style x:Key="RoundedTextBoxStyle" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}" 
+                             BorderBrush="{TemplateBinding BorderBrush}" 
+                             BorderThickness="{TemplateBinding BorderThickness}" 
+                             CornerRadius="15" 
+                             SnapsToDevicePixels="True">
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
 
-    <Grid>
-        <Label Content="ConfigsView" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="80"/>
-        <Button Content="ProfilePic" HorizontalAlignment="Left" Margin="640,155,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="40" Command="{Binding ChangeProfilePicCommand}"/>
-        <Image HorizontalAlignment="Left" Height="200" Margin="351,155,0,0" VerticalAlignment="Top" Width="200" Source="{Binding PicURL}"/>
-        <Button Content="ChangeType" HorizontalAlignment="Left" Margin="955,155,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="40" Command="{Binding ChangeAccountTypeCommand}"/>
+        <!-- Estilo para Botão arredondado -->
+        <Style x:Key="RoundedButtonStyle" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                             BorderBrush="{TemplateBinding BorderBrush}" 
+                             BorderThickness="{TemplateBinding BorderThickness}" 
+                             CornerRadius="15" 
+                             SnapsToDevicePixels="True">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Background" Value="#FFE8E8E8"/>
+            <Setter Property="BorderBrush" Value="#FFE8E8E8"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Gray"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
 
-        <TextBox HorizontalAlignment="Left" Margin="640,453,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" FontFamily="Arial" FontSize="30" Text="{Binding Name}"/>
-        <TextBox HorizontalAlignment="Left" Margin="898,453,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="288" Height="209" FontFamily="Arial" FontSize="30" Text="{Binding Bio}"/>
-        <Button Content="Save" HorizontalAlignment="Left" Margin="579,662,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30" Command="{Binding SaveProfileCommand}"/>
+        <Style x:Key="BotaoArredondado" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="22" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#FF1F1F1F"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="22" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF313131"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF0C0C0C"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#FF3A3A3A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Estilo para TextBoxes -->
+        <Style x:Key="TextBoxArredondado" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border CornerRadius="10" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="33" Background="{TemplateBinding Background}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#FF3A3A3A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="684"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Informações pessoais" HorizontalAlignment="Left" Margin="521,0,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="48" Grid.ColumnSpan="2"/>
+        <Ellipse VerticalAlignment="top" HorizontalAlignment="Left" Width="144" Height="144" Margin="474,56,66,520">
+            <Ellipse.Fill>
+                <ImageBrush x:Name="ProfilePic" ImageSource="{Binding PicURL}" />
+            </Ellipse.Fill>
+        </Ellipse>
+
+        <Button Style="{StaticResource RoundedButtonStyle}" Content="Foto" HorizontalAlignment="Left" Margin="521,152,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="40" Command="{Binding ChangeProfilePicCommand}" BorderBrush="Black"/>
+
+        <Button Style="{DynamicResource BotaoArredondado}" Content="Profissional" HorizontalAlignment="Left" Margin="185,489,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="25" Command="{Binding ChangeAccountTypeCommand}" BorderBrush="Black" Background="#FFFF9A9A" Width="194" Height="46" Grid.Column="1" />
+
+        <TextBox Style="{DynamicResource RoundedTextBoxStyle}" HorizontalAlignment="Left" Margin="520,273,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="543" FontFamily="Arial" FontSize="30" Text="{Binding Name}" BorderBrush="Black" Background="#FFDADADA" Height="60" Grid.ColumnSpan="2"/>
+
+        <TextBox Style="{StaticResource RoundedTextBoxStyle}" HorizontalAlignment="Left" Margin="520,396,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="543" Height="60" FontFamily="Arial" FontSize="30" Text="{Binding Bio}" RenderTransformOrigin="0.5,0.5" BorderBrush="Black" Background="#FFDADADA" Grid.ColumnSpan="2">
+
+        </TextBox>
+
+        <Button Style="{DynamicResource BotaoArredondado}" Content="Salvar" Margin="165,602,217,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="25" Command="{Binding SaveProfileCommand}" Background="#FFFF9A9A" Height="46" BorderBrush="Black" Grid.Column="1"/>
+
+
+        <Label Content="Mudar Nome" HorizontalAlignment="Left" Margin="520,229,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="25"/>
+        <Label Content="Mudar Bio" HorizontalAlignment="Left" Margin="521,357,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="25"/>
+        <Button Style="{DynamicResource BotaoArredondado}" Content="Sair da Conta" HorizontalAlignment="Left" Margin="520,602,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="25" Command="{Binding LogOutCommand}" Background="#FF828282" Height="46" Width="224" BorderBrush="Black" Grid.ColumnSpan="2"/>
+        <Button Style="{DynamicResource BotaoArredondado}" Content="Pessoal" HorizontalAlignment="Left" Margin="521,489,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="25" Command="{Binding ChangeAccountTypeCommand}" BorderBrush="Black" Background="#FFDADADA" Width="194" Height="46" Grid.ColumnSpan="2" />
         <Templates:NavBar HorizontalAlignment="Left" VerticalAlignment="Center"/>
     </Grid>
 </Page>

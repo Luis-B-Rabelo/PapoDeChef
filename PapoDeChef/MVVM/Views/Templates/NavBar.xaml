@@ -6,51 +6,113 @@
              xmlns:local="clr-namespace:PapoDeChef.MVVM.Views.Templates"
              DataContext="{Binding NavBar}"
              mc:Ignorable="d" 
-             MinHeight="720" MinWidth="360"
-             Background="White"
-             VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-    
-    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+             d:DesignHeight="720" d:DesignWidth="320"
+             MinHeight="720" MinWidth="320"
+             Background="White">
+    <UserControl.Resources>
+        <Style x:Key="BotaoArredondado" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#B7B4B4"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#B7B4B4"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF0C0C0C"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#B7B4B4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Estilo para TextBoxes -->
+        <Style x:Key="TextBoxArredondado" TargetType="TextBox">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border  Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"  Background="{TemplateBinding Background}">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#FF3A3A3A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid>
       
         <Label Content="papo de CHEF" Width="269" MinWidth="260" Height="62" MinHeight="62" Margin="51,82,0,576" FontFamily="Rockwell" FontSize="35" FontWeight="Bold"/>
-        <Image Margin="-22,0,236,576" Width="146" MinWidth="146" Height="144" MinHeight="144" Source="/Resources/Images/MaskGroup.png" Stretch="Fill"/>
+        <Image Margin="-18,0,192,576" Width="146" MinWidth="146" Height="144" MinHeight="144" Source="/Resources/Images/MaskGroup.png" Stretch="Fill"/>
 
-        <Button x:Name="btnInicio" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,182,0,467" Background="White" BorderBrush="White" Command="{Binding NavigateToHomeCommand}">
+        <Button Style="{StaticResource BotaoArredondado}" x:Name="btnInicio" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,182,0,467" Background="White" BorderBrush="White" Command="{Binding NavigateToHomeCommand}">
             <StackPanel Height="71" Width="360">
                 <Image Source="/Resources/Images/ic_round-home.png" Width="46" Margin="0,10,300,0" />
                 <Label Content="Início" Margin="48,-36,0,0" FontFamily="Rockwell" FontSize="18" FontWeight="Bold"/>
             </StackPanel>
         </Button>
 
-        <Button x:Name="btnExplorar" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,253,0,396" Background="White" BorderBrush="White" Command="{Binding NavigateToExploreCommand}">
+        <Button Style="{StaticResource BotaoArredondado}" x:Name="btnExplorar" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,253,0,396" Background="White" BorderBrush="White" Command="{Binding NavigateToExploreCommand}">
             <StackPanel Height="71" Width="360">
                 <Image Source="/Resources/Images/foundation_magnifying-glass.png" Width="46" Margin="0,10,300,0" />
                 <Label Content="Explorar" Margin="48,-36,0,0" FontFamily="Rockwell" FontSize="18" FontWeight="Bold"/>
             </StackPanel>
         </Button>
 
-        <Button x:Name="btnMensagens" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,324,0,325" Background="White" BorderBrush="White" Command="{Binding NavigateToChatCommand}">
+        <Button Style="{StaticResource BotaoArredondado}" x:Name="btnMensagens" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,324,0,325" Background="White" BorderBrush="White" Command="{Binding NavigateToChatCommand}">
             <StackPanel Height="71" Width="360">
                 <Image Source="/Resources/Images/Group.png" Width="46" Margin="0,10,300,0" />
                 <Label Content="Mensagens" Margin="48,-36,0,0" FontFamily="Rockwell" FontSize="18" FontWeight="Bold"/>
             </StackPanel>
         </Button>
 
-        <Button x:Name="btnCriar" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,395,0,254" Background="White" BorderBrush="White" Command="{Binding NavigateToNewPostCommand}">
+        <Button Style="{StaticResource BotaoArredondado}" x:Name="btnCriar" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,395,0,254" Background="White" BorderBrush="White" Command="{Binding NavigateToNewPostCommand}">
             <StackPanel Height="71" Width="360">
                 <Image Source="/Resources/Images/gridicons_create.png" Width="46" Margin="0,10,300,0" />
                 <Label Content="Criar" Margin="48,-36,0,0" FontFamily="Rockwell" FontSize="18" FontWeight="Bold"/>
             </StackPanel>
         </Button>
 
-        <Button x:Name="btnPerfil" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,471,0,178" Background="White" BorderBrush="White" Command="{Binding NavigateToProfileCommand}">
+        <Button Style="{StaticResource BotaoArredondado}" x:Name="btnPerfil" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,471,0,178" Background="White" BorderBrush="White" Command="{Binding NavigateToProfileCommand}">
             <StackPanel Height="71" Width="360">
                 <Image Source="{Binding NavBarPicURL}" Width="46" Height="46" Margin="0,10,300,0" />
                 <Label Content="Perfil" Margin="48,-36,0,0" FontFamily="Rockwell" FontSize="18" FontWeight="Bold"/>
             </StackPanel>
         </Button>
 
-        <Button x:Name="btnConfiguracoes" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,639,0,10" Background="White" BorderBrush="White" Command="{Binding NavigateToConfigsCommand}">
+        <Button Style="{StaticResource BotaoArredondado}" x:Name="btnConfiguracoes" Width="360" MinWidth="360" Height="71" MinHeight="71" Margin="0,639,0,10" Background="White" BorderBrush="White" Command="{Binding NavigateToConfigsCommand}">
             <StackPanel Height="71" Width="360">
                 <Image Source="/Resources/Images/IconeEngrenagem.png" Width="46" Margin="0,10,300,0" />
                 <Label Content="Configurações" Margin="48,-36,0,0" FontFamily="Rockwell" FontSize="18" FontWeight="Bold"/>

@@ -124,6 +124,12 @@ namespace PapoDeChef.MVVM.ViewModels
             NavigationEvent.NavigateTo(nameof(ProfileViewModel));
         }
 
+        [RelayCommand]
+        public void NavigateToHome()
+        {
+            NavigationEvent.NavigateTo(nameof(HomeViewModel));
+        }
+
         #endregion
     }
 }

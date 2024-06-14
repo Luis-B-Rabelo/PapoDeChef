@@ -20,7 +20,7 @@ using NLog;
 
 namespace PapoDeChef.MVVM.ViewModels
 {
-    public class SettingsViewModel : ViewModel
+    public partial class SettingsViewModel : ViewModel
     {
         #region Properties
 
@@ -226,6 +226,13 @@ namespace PapoDeChef.MVVM.ViewModels
                 NavigationEvent.NavigateTo(nameof(SettingsViewModel));
             }
 
+        }
+
+        [RelayCommand]
+        public void LogOut()
+        {
+            Session.AccountSession.SetSesion(0, null);
+            NavigationEvent.NavigateTo(nameof(StartViewModel));
         }
 
         #endregion

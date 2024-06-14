@@ -12,16 +12,9 @@
       Title="NewPostView">
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition MinHeight="66"/>
-        </Grid.RowDefinitions>
 
         <Border BorderThickness="0,0,0,3" BorderBrush="Black" VerticalAlignment="Top" Height="66" MinHeight="66"/>
-        <Label Content="Criar novo post" Width="424" MinWidth="424" Height="50" MinHeight="50" FontSize="40" HorizontalContentAlignment="Center" FontFamily="Inter" Margin="428,8,428,662"/>
+        <Label VerticalAlignment="Top" Content="Criar novo post" Width="424" MinWidth="424" Height="50" MinHeight="50" FontSize="40" HorizontalContentAlignment="Center" FontFamily="Inter" Margin="428,8,428,662"/>
 
         <Border BorderThickness="0,0,3,0" BorderBrush="Black" Width="640" MinWidth="640" Height="654" MinHeight="654" Margin="0,66,640,0"/>
         <Image Width="618" MinWidth="618" Height="420" MinHeight="420" Margin="11,108,651,182" Source="{Binding PostImgURI}"/>

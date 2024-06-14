@@ -15,7 +15,7 @@
         <DataTemplate x:Key="NormalPostTemplate">
             <ListBox ItemsSource="{Binding Post}">
                 <Button Foreground="{x:Null}" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="250" Height="350">
                         <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
                         <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
                         <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
@@ -31,7 +31,7 @@
         <DataTemplate x:Key="RecipePostTemplate">
             <ListBox ItemsSource="{Binding Post}">
                 <Button Foreground="{x:Null}" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="250" Height="350">
                         <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
                         <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
                         <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
@@ -50,17 +50,68 @@
                                     NormalPostTemplate="{StaticResource NormalPostTemplate}"
                                     RecipePostTemplate="{StaticResource RecipePostTemplate}"/>
 
+        <Style x:Key="BotaoArredondado" TargetType="Button">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="22" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Background" Value="#FF1F1F1F"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="22" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF313131"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#FF0C0C0C"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="#FF3A3A3A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
 
-    <Grid>
-        <Label Content="ProfileView" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="80"/>
-        <Label x:Name="Name" Content="{Binding Name}" HorizontalAlignment="Left" Margin="667,148,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="40"/>
-        <Label x:Name="Tag" Content="{Binding Tag}" HorizontalAlignment="Left" Margin="667,232,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="40"/>
-        <Image x:Name="ProfilePic"  Source="{Binding PicURL}" HorizontalAlignment="Left" Height="100" Margin="410,148,0,0" VerticalAlignment="Top" Width="100"/>
+    <Grid Background="White">
+        <Label x:Name="Name" Content="{Binding Name}"  Margin="527,131,589,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="20" Height="46" Width="164"/>
+        <Label x:Name="Tag" Content="{Binding Tag}"  Margin="520,177,590,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="20" Height="43" Width="170" RenderTransformOrigin="0.5,0.5">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-0.696"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Ellipse Width="144" Height="144" Margin="383,82,753,0" VerticalAlignment="Top">
+            <Ellipse.Fill>
+                <ImageBrush x:Name="ProfilePic" ImageSource="{Binding PicURL}" Stretch="UniformToFill"/>
+            </Ellipse.Fill>
+        </Ellipse>
 
-        <templates:NavBar HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <Button Style="{StaticResource BotaoArredondado}" Content="Seguir" Margin="857,154,331,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="18" Height="41" Command="{Binding FollowCommand}" Width="92" />
+        <Button Style="{StaticResource BotaoArredondado}" Content="Parar de Seguir"  Margin="696,154,438,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="18" Height="40" Width="146" Command="{Binding UnfollowCommand}" RenderTransformOrigin="0.488,0.452"/>
+        <Image HorizontalAlignment="Stretch" Height="126" VerticalAlignment="Top" Width="601" Source="/Resources/Images/FoodBackground.png" Stretch="Fill"/>
 
-        <ListView ItemsSource="{Binding AccountPosts}" ItemTemplateSelector="{StaticResource PostTemplateSelector}" Margin="360,247,376,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+        <templates:NavBar HorizontalAlignment="Left" VerticalAlignment="Center" />
+
+        <ListView ItemsSource="{Binding AccountPosts}" ItemTemplateSelector="{StaticResource PostTemplateSelector}" Margin="0,226,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden"  HorizontalAlignment="Center"
+VerticalAlignment="Top"
+ Height="800" Width="600">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="3" HorizontalAlignment="Center"/>
@@ -68,10 +119,10 @@
             </ListView.ItemsPanel>
         </ListView>
 
-        <Button Content="Seguir" HorizontalAlignment="Left" Margin="1053,8,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30" Height="48" Command="{Binding FollowCommand}" Width="114"/>
-        <Button Content="Parar de Seguir" HorizontalAlignment="Left" Margin="1053,72,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30" Height="48" Width="227" Command="{Binding UnfollowCommand}"/>
-        
-        <ListView ItemsSource="{Binding Followers}" Margin="966,172,0,338">
+        <ListView ItemsSource="{Binding Followers}" Margin="966,215,0,295"
+                    HorizontalAlignment="Right"
+  VerticalAlignment="Center"
+   Height="200" Width="300">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
@@ -80,26 +131,7 @@
 
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Button Foreground="{x:Null}" Command="{Binding DataContext.SeeAccountCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding PicURI}" Width="50" Height="50"/>
-                            <Label Content="{Binding Tag}"/>
-                        </StackPanel>
-                    </Button>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-            
-        </ListView>
-        <ListView ItemsSource="{Binding Following}" Margin="966,416,0,94">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
-
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Button Foreground="{x:Null}" Command="{Binding DataContext.SeeAccountCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}">
+                    <Button Foreground="{x:Null}" Command="{Binding DataContext.SeeAccountCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}" Width="250" Height="60">
                         <StackPanel Orientation="Horizontal">
                             <Image Source="{Binding PicURI}" Width="50" Height="50"/>
                             <Label Content="{Binding Tag}"/>
@@ -109,7 +141,27 @@
             </ListView.ItemTemplate>
 
         </ListView>
-        <Button Content="Chat" HorizontalAlignment="Left" Margin="966,662,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30" Height="48" Command="{Binding ChatCommand }" Width="114"/>
+        <ListView ItemsSource="{Binding Following}" Margin="966,489,0,21"                   HorizontalAlignment="Right"
+VerticalAlignment="Center"
+ Height="200" Width="300">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Columns="1" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Button Foreground="{x:Null}" Command="{Binding DataContext.SeeAccountCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}" Width="250" Height="60">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding PicURI}" Width="50" Height="50"/>
+                            <Label Content="{Binding Tag}"/>
+                        </StackPanel>
+                    </Button>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+
+        </ListView>
 
     </Grid>
 </Page>
