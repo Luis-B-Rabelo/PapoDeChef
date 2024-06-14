@@ -7,12 +7,11 @@
              DataContext="{Binding SearchBar}"
              mc:Ignorable="d" 
              d:DesignHeight="35" d:DesignWidth="375"
-             MinHeight="35" MinWidth="375"
-             MaxHeight="40">
-
+             MinHeight="35" MinWidth="375">
+    
     <Grid>
-        <Border x:Name="bdrFundo" CornerRadius="20" BorderBrush="Black" BorderThickness="2" Background="White"/>
-        <Image x:Name="imgLupa" Source="/Resources/Images/IconeLupa.png" Width="20" Height="20" Margin="10,8,0,8" HorizontalAlignment="Left"/>
-        <TextBox x:Name="txtBarraDePesquisa" Margin="40,4,10,3" BorderThickness="0" Text="Buscar" VerticalContentAlignment="Center" FontSize="20" GotFocus="txtBarraDePesquisa_GotFocus" LostFocus="txtBarraDePesquisa_LostFocus"/>
+        <Border x:Name="bdrFundo" CornerRadius="20" Height="35" Width="375" BorderBrush="Black" BorderThickness="2" Background="White"/>
+        <Image x:Name="imgLupa" Source="/Resources/Images/IconeLupa.png" Width="20" Height="20" Margin="10,8,345,7"/>
+        <TextBox x:Name="txtBarraDePesquisa" Margin="39,4,17,3" BorderThickness="0" Text="Buscar" VerticalContentAlignment="Center" FontSize="20"/>
     </Grid>
 </UserControl>

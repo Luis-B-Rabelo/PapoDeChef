@@ -24,25 +24,5 @@ namespace PapoDeChef.MVVM.Views.Templates
         {
             InitializeComponent();
         }
-
-        private void txtBarraDePesquisa_GotFocus(object sender, RoutedEventArgs e)
-        {
-            string textoBarra = txtBarraDePesquisa.Text;
-            
-            if (textoBarra == "Buscar")
-            {
-                txtBarraDePesquisa.Text = null;
-            }
-        }
-
-        private void txtBarraDePesquisa_LostFocus(object sender, RoutedEventArgs e)
-        {
-            string textoBarra = txtBarraDePesquisa.Text;
-
-            if (string.IsNullOrEmpty(textoBarra))
-            {
-                txtBarraDePesquisa.Text = "Buscar";
-            }
-        }
     }
 }
