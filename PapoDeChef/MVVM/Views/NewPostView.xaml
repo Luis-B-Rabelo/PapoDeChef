@@ -12,6 +12,13 @@
       Title="NewPostView">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="66"/>
+        </Grid.RowDefinitions>
 
         <Border BorderThickness="0,0,0,3" BorderBrush="Black" VerticalAlignment="Top" Height="66" MinHeight="66"/>
         <Label Content="Criar novo post" Width="424" MinWidth="424" Height="50" MinHeight="50" FontSize="40" HorizontalContentAlignment="Center" FontFamily="Inter" Margin="428,8,428,662"/>
