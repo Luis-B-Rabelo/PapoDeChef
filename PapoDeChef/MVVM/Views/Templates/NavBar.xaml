@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:PapoDeChef.MVVM.Views.Templates"
              DataContext="{Binding NavBar}"
              mc:Ignorable="d" 
-             d:DesignHeight="720" d:DesignWidth="320"
-             MinHeight="720" MinWidth="320"
-             Background="White">
+             MinHeight="720" MinWidth="360"
+             Background="White"
+             VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
     
-    <Grid>
+    <Grid VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
       
         <Label Content="papo de CHEF" Width="269" MinWidth="260" Height="62" MinHeight="62" Margin="51,82,0,576" FontFamily="Rockwell" FontSize="35" FontWeight="Bold"/>
         <Image Margin="-22,0,236,576" Width="146" MinWidth="146" Height="144" MinHeight="144" Source="/Resources/Images/MaskGroup.png" Stretch="Fill"/>
