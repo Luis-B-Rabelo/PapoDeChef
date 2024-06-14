@@ -116,8 +116,8 @@ VerticalAlignment="Top"
             </ListView.ItemsPanel>
         </ListView>
 
-        <ListView ItemsSource="{Binding Followers}" Margin="966,215,0,295"
-                    HorizontalAlignment="Right"
+        <ListView ItemsSource="{Binding Followers}" Margin="980,0,0,0"
+                    HorizontalAlignment="Left"
   VerticalAlignment="Center"
    Height="200" Width="300">
             <ListView.ItemsPanel>
@@ -138,9 +138,9 @@ VerticalAlignment="Top"
             </ListView.ItemTemplate>
 
         </ListView>
-        <ListView ItemsSource="{Binding Following}" Margin="966,489,0,21" 
+        <ListView ItemsSource="{Binding Following}" Margin="0,510,0,0" 
                   HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
+                    VerticalAlignment="Top"
  Height="200" Width="300">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
@@ -164,6 +164,10 @@ VerticalAlignment="Top"
         <Label x:Name="Bio" Content="{Binding Bio}"  Margin="410,291,416,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="20" Height="43" >
 
         </Label>
+        <Label Content="Seguidores" HorizontalAlignment="Left" Margin="1006,216,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30"/>
+        <Label Content="Seguindo" HorizontalAlignment="Left" Margin="1006,460,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30"/>
+        <Label Content="{Binding QntFollowers}" HorizontalAlignment="Left" Margin="1205,216,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30"/>
+        <Label Content="{Binding QntFollowing}"  HorizontalAlignment="Left" Margin="1205,461,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30"/>
 
     </Grid>
 </Page>
