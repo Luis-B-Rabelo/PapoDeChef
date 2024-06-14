@@ -64,6 +64,9 @@
     </Page.Resources>
 
     <Grid>
+        
+        <templates:FollowerBlock HorizontalAlignment="Right" Margin="10"/>
+        
         <Label Content="HomeView" HorizontalAlignment="Center" Margin="0,21,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="80"/>
 
         <templates:NavBar HorizontalAlignment="Left" VerticalAlignment="Center"/>
