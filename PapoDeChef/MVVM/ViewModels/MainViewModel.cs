@@ -90,7 +90,7 @@ namespace PapoDeChef.MVVM.ViewModels
                     CurrentViewModel = new NewPostViewModel();
                     break;
                 case nameof(ChatViewModel):
-                    CurrentViewModel = new ChatViewModel();
+                    CurrentViewModel = new ChatViewModel(parameters);
                     break;
             }
 

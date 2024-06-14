@@ -172,6 +172,11 @@ namespace PapoDeChef.MVVM.ViewModels
             }
         }
 
+        public ObservableCollection<uint> Chats
+        {
+            get => _account.Chats;
+        }
+
         #endregion
 
         #region Methods
@@ -254,6 +259,46 @@ namespace PapoDeChef.MVVM.ViewModels
             };
             NavigationEvent.NavigateTo(nameof(ProfileViewModel));
         }
+
+        [RelayCommand]
+        public void Chat()
+        {
+            ObservableCollection<ChatModel> chats = ChatDAO.GetAccountChats(Chats);
+            ChatModel chat;
+
+            chat = chats.AsParallel().FirstOrDefault(chat => chat.Account1.ID == Session.AccountSession.ID || chat.Account2.ID == Session.AccountSession.ID, null);
+
+            if(chat == null)
+            {
+                PreviewAccountModel account1 = new PreviewAccountModel
+                {
+                    ID = Session.AccountSession.ID,
+                    Tag = Session.AccountSession.Tag
+                };
+
+                PreviewAccountModel account2 = new PreviewAccountModel
+                {
+                    ID = this.ID,
+                    Tag = this.Tag
+                };
+
+                uint chatID = ChatDAO.CreateChat(account1, account2);
+                NavigationEvent.Parameters = new Dictionary<string, object>
+                {
+                    { "ID", chatID }
+                };
+            }
+            else
+            {
+                NavigationEvent.Parameters = new Dictionary<string, object>
+                {
+                    { "ID", chat.ID }
+                };
+            }
+            
+            NavigationEvent.NavigateTo(nameof(ChatViewModel));
+        }
+
         #endregion
     }
 }

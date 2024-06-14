@@ -109,6 +109,7 @@
             </ListView.ItemTemplate>
 
         </ListView>
+        <Button Content="Chat" HorizontalAlignment="Left" Margin="966,662,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30" Height="48" Command="{Binding ChatCommand }" Width="114"/>
 
     </Grid>
 </Page>

@@ -36,7 +36,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="RecipePostTemplate">
-            <ListBox ItemsSource="{Binding Post}">
+            <ListBox ItemsSource="{Binding Post}" VerticalContentAlignment="Top" VerticalAlignment="Top" Padding="0" Margin="0">
                 <Button Foreground="{x:Null}" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ExploreView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
                     <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                         <Button Foreground="{x:Null}" Command="{Binding DataContext.SeeAccountCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ExploreView}, Mode=FindAncestor}}" CommandParameter="{Binding Account.ID}">
@@ -67,6 +67,7 @@
 
     <Grid>
 
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
@@ -83,9 +84,11 @@
             Grid.RowSpan="1" 
             Grid.Column="1" 
             ItemsSource="{Binding ExplorePosts}" 
+            ItemTemplateSelector="{StaticResource PostTemplateSelector}"
             Margin="10,60,10,10" 
             ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
-            ScrollViewer.VerticalScrollBarVisibility="Auto">
+            ScrollViewer.VerticalScrollBarVisibility="Auto"
+            VerticalContentAlignment="Top">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="3"/>

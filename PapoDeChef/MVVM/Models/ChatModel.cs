@@ -1,4 +1,5 @@
 ﻿#region Internal Libs
+using PapoDeChef.MVVM.Models;
 using System.Collections.ObjectModel;
 #endregion
 
@@ -12,15 +13,15 @@ using System.Collections.ObjectModel;
 
 namespace FoodSocialMedia.MVVM.Models
 {
-    class ChatModel
+    public class ChatModel
     {
         #region Properties
 
-        private uint _chatID;
+        private uint _id;
 
-        private uint _account1ID;
+        private PreviewAccountModel _account1;
 
-        private uint _account2ID;
+        private PreviewAccountModel _account2;
 
         private ObservableCollection<MessageModel> _messages;
 
@@ -31,15 +32,30 @@ namespace FoodSocialMedia.MVVM.Models
 
         #region Getters & Setters
 
-        public uint ChaID { get; }
+        public uint ID 
+        {
+            get => _id; 
+        }
 
-        public uint Account1ID { get; }
+        public PreviewAccountModel Account1
+        {
+            get => _account1;
+        }
 
-        public uint Account2ID { get; }
+        public PreviewAccountModel Account2
+        {
+            get => _account2;
+        }
 
-        public ObservableCollection<MessageModel> Messages;
+        public ObservableCollection<MessageModel> Messages
+        {
+            get => _messages;
+        }
 
-        public DateOnly ChatCreationDate { get; }
+        public DateOnly ChatCreationDate
+        {
+            get => _chatCreationDate;
+        }
 
         #endregion
 
@@ -47,9 +63,9 @@ namespace FoodSocialMedia.MVVM.Models
 
         public void SetChatModel(IDictionary<string, object> savedChat)
         {
-            _chatID = (uint)savedChat["ChatID"];
-            _account1ID = (uint)savedChat["Account1ID"];
-            _account2ID = (uint)savedChat["Account2ID"];
+            _id = (uint)savedChat["ID"];
+            _account1 = (PreviewAccountModel)savedChat["Account1"];
+            _account2 = (PreviewAccountModel)savedChat["Account2"];
             _messages = (ObservableCollection<MessageModel>)savedChat["Messages"];
             _chatCreationDate = (DateOnly)savedChat["ChatCreationDate"];
 

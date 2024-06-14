@@ -122,6 +122,8 @@ namespace FoodSocialMedia.MVVM.Models
             _following = (List<PreviewAccountModel>)savedAccount["Following"];
             _qntFollowing = (uint)savedAccount["QntFollowing"];
 
+            _chats = (ObservableCollection<uint>)savedAccount["Chats"];
+
             _accessLevel = (byte)savedAccount["AccessLevel"];
             _creationDate = (DateOnly)savedAccount["CreationDate"];
         }

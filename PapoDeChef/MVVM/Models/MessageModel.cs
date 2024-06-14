@@ -9,33 +9,44 @@
 
 namespace FoodSocialMedia.MVVM.Models
 {
-    class MessageModel
+    public class MessageModel
     {
         #region Properties
 
-        private uint _sentByUserId;
+        private uint _sentByAccountID;
 
         private string _message;
 
-        private DateTime _sentDateTime;
+        private DateTime _messageDateTime;
 
         #endregion
 
         #region Getters & Setters
 
-        public uint SentByUserId;
+        public uint SentByAccountID
+        {
+            get => _sentByAccountID;
+        }
 
-        public string Message;
+        public string Message
+        {
+            get => _message;
+        }
 
-        public DateTime SentDateTime;
+        public DateTime MessageDateTime
+        {
+            get => _messageDateTime;
+        }
 
         #endregion
 
         #region Methods
 
-        public void SetMessageModel(uint sentByUserID, string message)
+        public void SetMessageModel(uint sentByAccountID, string message)
         {
-
+            _sentByAccountID = sentByAccountID;
+            _message = message;
+            _messageDateTime = DateTime.Now;
         }
 
         #endregion

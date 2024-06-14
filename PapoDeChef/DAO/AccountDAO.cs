@@ -4,6 +4,7 @@ using NLog;
 using PapoDeChef.Core;
 using PapoDeChef.Database;
 using PapoDeChef.MVVM.Models;
+using System.Collections.ObjectModel;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -33,6 +34,7 @@ namespace PapoDeChef.DAO
                 { "Followers", new List<PreviewAccountModel>() },
                 { "QntFollowing", (uint)0 },
                 { "Following", new List<PreviewAccountModel>()},
+                { "Chats", new ObservableCollection<uint>() },
                 { "AccessLevel", (byte)0 },
                 { "CreationDate", DateOnly.Parse(DateTime.Today.ToString("d")) },
                 { "Birthdate", new DateOnly() }
@@ -110,7 +112,7 @@ namespace PapoDeChef.DAO
 
         public static IAccountModel GetAccountByID(uint ID)
         {
-            IDictionary<string, object> savedAccount = DBConn.DB.Accounts.FirstOrDefault(x => (uint)x["ID"] == ID, null);
+            IDictionary<string, object> savedAccount = DBConn.DB.Accounts[(int)ID - 1];
 
             if (savedAccount != null)
             {
@@ -133,30 +135,6 @@ namespace PapoDeChef.DAO
             }
         }
 
-        public static IAccountModel GetAccountByTag(string tag)
-        {
-            IDictionary<string, object> savedAccount = DBConn.DB.Accounts.FirstOrDefault(x => (string)x["Tag"] == tag, null);
-
-            if (savedAccount != null)
-            {
-                if ((byte)savedAccount["AccessLevel"] == (byte)0)
-                {
-                    NaturalPersonAccountModel naturalPersonAccountModel = new NaturalPersonAccountModel();
-                    naturalPersonAccountModel.SetAccountModel(savedAccount);
-                    return naturalPersonAccountModel;
-                }
-                else
-                {
-                    LegalPersonAccountModel legalPersonAccountModel = new LegalPersonAccountModel();
-                    legalPersonAccountModel.SetAccountModel(savedAccount);
-                    return legalPersonAccountModel;
-                }
-            }
-            else
-            {
-                return null;
-            }
-        }
 
         public static bool ChangeNaturalAccountToLegal(NaturalPersonAccountModel naturalAccount)
         {
