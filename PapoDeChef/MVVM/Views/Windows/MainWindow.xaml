@@ -42,6 +42,10 @@
             <view:PostView/>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type viewModel:RecipePostViewModel}">
+            <view:RecipePostView/>
+        </DataTemplate>
+
         <DataTemplate DataType="{x:Type viewModel:NewPostViewModel}">
             <view:NewPostView/>
         </DataTemplate>

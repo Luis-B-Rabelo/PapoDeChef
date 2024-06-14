@@ -4,6 +4,7 @@ using PapoDeChef.DAO;
 using System.Collections.ObjectModel;
 using PapoDeChef.Events;
 using PapoDeChef.MVVM.Models;
+using FoodSocialMedia.MVVM.Models;
 
 namespace PapoDeChef.MVVM.ViewModels
 {
@@ -39,11 +40,39 @@ namespace PapoDeChef.MVVM.ViewModels
         [RelayCommand]
         public void SeePost(IPostModel post)
         {
-            NavigationEvent.Parameters = new Dictionary<string, object>
+#if DEBUG
+            GlobalNecessities.Logger.Debug("Accessado Post");
+#endif
+
+
+            if (post != null)
             {
-                {"Post", post }
-            };
-            NavigationEvent.NavigateTo(nameof(PostViewModel));
+#if DEBUG
+                GlobalNecessities.Logger.Debug("Parametro post não nulo");
+#endif
+                if (!post.IsRecipePost)
+                {
+#if DEBUG
+                    GlobalNecessities.Logger.Debug("Acessando post normal");
+#endif
+                    NavigationEvent.Parameters = new Dictionary<string, object>
+                    {
+                        {"Post", post }
+                    };
+                    NavigationEvent.NavigateTo(nameof(PostViewModel));
+                }
+                else
+                {
+#if DEBUG
+                    GlobalNecessities.Logger.Debug("Acessando post de receita");
+#endif
+                    NavigationEvent.Parameters = new Dictionary<string, object>
+                    {
+                        {"Post", post }
+                    };
+                    NavigationEvent.NavigateTo(nameof(RecipePostViewModel));
+                }
+            }
         }
 
         [RelayCommand]

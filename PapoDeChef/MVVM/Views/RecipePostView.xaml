@@ -1,4 +1,4 @@
-﻿<Page x:Class="PapoDeChef.MVVM.Views.PostView"
+﻿<Page x:Class="PapoDeChef.MVVM.Views.RecipePostView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,19 +7,19 @@
       mc:Ignorable="d" 
       d:DesignHeight="720" d:DesignWidth="1280"
       MinHeight="720" MinWidth="1280"
-      Title="PostView">
-    
-  
+      Title="RecipePostView">
+
+
     <Grid Background="White">
         <Image HorizontalAlignment="Left" Height="552" Margin="57,61,0,0" VerticalAlignment="Top" Width="618" Source="{Binding PostImgURI}"/>
 
         <ListView ItemsSource="{Binding Comments}" 
-                  Margin="804,35,76,102" 
+                  Margin="815,72,65,0" 
                   ScrollViewer.HorizontalScrollBarVisibility="Disabled" 
                   ScrollViewer.VerticalScrollBarVisibility="Hidden"
                   HorizontalContentAlignment="Left"
                   VerticalAlignment="Top"
-                   Height="583" Width="400">
+                   Height="546" Width="400">
 
             <!-- Tamanho fixo -->
             <ListView.ItemsPanel>
@@ -30,7 +30,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <Button Foreground="{x:Null}" Command="{Binding DataContext.SeeAccountCommand, RelativeSource={RelativeSource AncestorType={x:Type local:PostView}, Mode=FindAncestor}}" CommandParameter="{Binding Account.ID}">
+                        <Button Foreground="Transparent" Background="Transparent" Command="{Binding DataContext.SeeAccountCommand, RelativeSource={RelativeSource AncestorType={x:Type local:PostView}, Mode=FindAncestor}}" CommandParameter="{Binding Account.ID}">
                             <StackPanel Orientation="Vertical">
                                 <Image Source="{Binding Account.PicURI}" Width="50" Height="50"/>
                                 <Label Content="{Binding Account.Tag}"/>
@@ -49,12 +49,25 @@
                 </Style>
             </Button.Resources>
         </Button>
-        <TextBox Margin="840,0,112,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="329" FontFamily="Arial" FontSize="30" Height="92" Text="{Binding NewComment}"/>
-        <Button   VerticalAlignment="Bottom" HorizontalAlignment="Right"  Command="{Binding LikePostCommand}" CommandParameter="{Binding ID}" FontFamily="Arial" FontSize="30" Margin="0,0,463,37" Background="White" BorderBrush="White">
+        <TextBox  Margin="867,0,128,10" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="285" FontFamily="Arial" FontSize="30" Height="92" Text="{Binding NewComment}"/>
+        <Button   VerticalAlignment="Bottom" HorizontalAlignment="Right"  Command="{Binding LikePostCommand}" CommandParameter="{Binding ID}" FontFamily="Arial" FontSize="30" Margin="0,0,414,37" Background="White" BorderBrush="White">
             <Image Source="/Resources/Images/Like.png" Height="39" Width="47" OpacityMask="White"/>
         </Button>
-        <Button VerticalAlignment="Bottom"  HorizontalAlignment="Right" Margin="0,0,42,37"  FontFamily="Arial" FontSize="20" Height="43" Command="{Binding CommentOnPostCommand}" Width="56" Background="White" BorderBrush="White">
+        <Button VerticalAlignment="Bottom"  HorizontalAlignment="Right" Margin="0,0,67,35"  FontFamily="Arial" FontSize="20" Height="43" Command="{Binding CommentOnPostCommand}" Width="56" Background="White" BorderBrush="White">
             <Image Source="/Resources/Images/uil_message.png"/>
         </Button>
+        <Button Content="Receita" HorizontalAlignment="Left" Margin="670,68,0,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="30" Click="Button_Click"/>
+
+        <Grid Margin="0" Background="White" x:Name="Recipe" Visibility="Hidden" IsEnabled="False">
+            <Button FontFamily="Arial" FontSize="30" Panel.ZIndex="2" Margin="0,0,1175,633" Click="Button_Click_1">Voltar</Button>
+            <StackPanel Orientation="Vertical" Margin="0,0,640,0" Background="LightGray" Width="640">
+                <Label FontFamily="Arial" FontSize="50" HorizontalContentAlignment="Center">Ingredientes</Label>
+                <TextBlock Text="{Binding Ingredients}" FontFamily="Arial" FontSize="40" Background="Transparent" Width="480" Height="602"/>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Background="LightGray" Width="640" Margin="640,0,0,0">
+                <Label FontFamily="Arial" FontSize="50" HorizontalContentAlignment="Center" Content="Modo de Preparo"/>
+                <TextBlock Text="{Binding Directions}" FontFamily="Arial" FontSize="40" Background="Transparent" Width="480" Height="602"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

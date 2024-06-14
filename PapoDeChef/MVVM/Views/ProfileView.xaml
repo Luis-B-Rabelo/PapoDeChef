@@ -13,15 +13,14 @@
 
     <Page.Resources>
         <DataTemplate x:Key="NormalPostTemplate">
-            <ListBox ItemsSource="{Binding Post}">
-                <Button Foreground="{x:Null}" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="250" Height="350">
-                        <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
+            <ListBox ItemsSource="{Binding Post}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="250" Height="250" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Padding="0" Margin="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <Button Foreground="Transparent" Background="Transparent" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0">
+                        <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="150" Height="150"/>
                         <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
                         <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
                         <StackPanel Orientation="Horizontal">
                             <Button Content="Like" Command="{Binding DataContext.LikePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}"/>
-                            <Label Content="{Binding LikeCount}"/>
                         </StackPanel>
                     </StackPanel>
                 </Button>
@@ -29,16 +28,14 @@
         </DataTemplate>
 
         <DataTemplate x:Key="RecipePostTemplate">
-            <ListBox ItemsSource="{Binding Post}">
-                <Button Foreground="{x:Null}" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
-                    <StackPanel Orientation="Vertical" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="250" Height="350">
-                        <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="250" Height="250"/>
+            <ListBox ItemsSource="{Binding Post}" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Width="250" Height="250" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Padding="0" Margin="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+                <Button Foreground="Transparent" Background="Transparent" Command="{Binding DataContext.SeePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding Post}">
+                    <StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0">
+                        <Image Source="{Binding PostImgURI}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Stretch="Uniform" Width="150" Height="150"/>
                         <Label Content="{Binding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" />
                         <TextBlock Text="{Binding Description}" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"/>
                         <StackPanel Orientation="Horizontal">
                             <Button Content="Like" Command="{Binding DataContext.LikePostCommand, RelativeSource={RelativeSource AncestorType={x:Type local:ProfileView}, Mode=FindAncestor}}" CommandParameter="{Binding ID}"/>
-                            <Label Content="{Binding LikeCount}"/>
-                            <Label Content="{Binding Ratings}" Margin="10,0,0,0"/>
                             <Label Content="{Binding AverageRating}" Margin="10,0,0,0"/>
                         </StackPanel>
                     </StackPanel>
@@ -103,15 +100,15 @@
             </Ellipse.Fill>
         </Ellipse>
 
-        <Button Style="{StaticResource BotaoArredondado}" Content="Seguir" Margin="857,154,331,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="18" Height="41" Command="{Binding FollowCommand}" Width="92" />
-        <Button Style="{StaticResource BotaoArredondado}" Content="Parar de Seguir"  Margin="696,154,438,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="18" Height="40" Width="146" Command="{Binding UnfollowCommand}" RenderTransformOrigin="0.488,0.452"/>
-        <Image HorizontalAlignment="Stretch" Height="126" VerticalAlignment="Top" Width="601" Source="/Resources/Images/FoodBackground.png" Stretch="Fill"/>
+        <Button Style="{StaticResource BotaoArredondado}" Content="Seguir" Margin="674,154,514,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="18" Height="41" Command="{Binding FollowCommand}" Width="92" />
+        <Button Style="{StaticResource BotaoArredondado}" Content="Parar de Seguir"  Margin="786,154,348,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="18" Height="40" Width="146" Command="{Binding UnfollowCommand}" RenderTransformOrigin="0.488,0.452"/>
 
         <templates:NavBar HorizontalAlignment="Left" VerticalAlignment="Center" />
 
         <ListView ItemsSource="{Binding AccountPosts}" ItemTemplateSelector="{StaticResource PostTemplateSelector}" Margin="0,226,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden"  HorizontalAlignment="Center"
 VerticalAlignment="Top"
- Height="800" Width="600">
+                  HorizontalContentAlignment="Left"
+                  VerticalContentAlignment="Top">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="3" HorizontalAlignment="Center"/>
@@ -141,8 +138,9 @@ VerticalAlignment="Top"
             </ListView.ItemTemplate>
 
         </ListView>
-        <ListView ItemsSource="{Binding Following}" Margin="966,489,0,21"                   HorizontalAlignment="Right"
-VerticalAlignment="Center"
+        <ListView ItemsSource="{Binding Following}" Margin="966,489,0,21" 
+                  HorizontalAlignment="Right"
+                    VerticalAlignment="Center"
  Height="200" Width="300">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>

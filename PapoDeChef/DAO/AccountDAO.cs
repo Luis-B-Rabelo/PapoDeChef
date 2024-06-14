@@ -344,6 +344,7 @@ namespace PapoDeChef.DAO
                             { "QntFollowers", naturalPersonAccountModel.QntFollowers },
                             { "Following", naturalPersonAccountModel.Following },
                             { "QntFollowing", naturalPersonAccountModel.QntFollowing },
+                            { "Chats", new ObservableCollection<uint>() },
                             { "AccessLevel", naturalPersonAccountModel.AccessLevel },
                             { "CreationDate", naturalPersonAccountModel.CreationDate },
                             { "Birthdate", naturalPersonAccountModel.Birthdate }
@@ -369,6 +370,7 @@ namespace PapoDeChef.DAO
                         { "QntFollowers", naturalPersonAccountModel.QntFollowers },
                         { "Following", naturalPersonAccountModel.Following },
                         { "QntFollowing", naturalPersonAccountModel.QntFollowing },
+                        { "Chats", new ObservableCollection<uint>() },
                         { "AccessLevel", (byte)1 },
                         { "CreationDate", naturalPersonAccountModel.CreationDate },
                         { "FoundDate", new DateOnly() },
@@ -420,6 +422,7 @@ namespace PapoDeChef.DAO
                         { "QntFollowers", legalPersonAccountModel.QntFollowers },
                         { "Following", legalPersonAccountModel.Following },
                         { "QntFollowing", legalPersonAccountModel.QntFollowing },
+                                        { "Chats", new ObservableCollection<uint>() },
                         { "AccessLevel", legalPersonAccountModel.AccessLevel },
                         { "CreationDate", legalPersonAccountModel.CreationDate },
                         { "FoundDate", legalPersonAccountModel.FoundDate },
@@ -448,6 +451,7 @@ namespace PapoDeChef.DAO
                         { "QntFollowers", legalPersonAccountModel.QntFollowers },
                         { "Following", legalPersonAccountModel.Following },
                         { "QntFollowing", legalPersonAccountModel.QntFollowing },
+                                        { "Chats", new ObservableCollection<uint>() },
                         { "AccessLevel", (byte)0 },
                         { "CreationDate", legalPersonAccountModel.CreationDate },
                         { "Birthdate", new DateOnly() }

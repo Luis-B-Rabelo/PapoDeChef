@@ -86,6 +86,9 @@ namespace PapoDeChef.MVVM.ViewModels
                 case nameof(PostViewModel):
                     CurrentViewModel = new PostViewModel(parameters);
                     break;
+                case nameof(RecipePostViewModel):
+                    CurrentViewModel = new RecipePostViewModel(parameters);
+                    break;
                 case nameof(NewPostViewModel):
                     CurrentViewModel = new NewPostViewModel();
                     break;
