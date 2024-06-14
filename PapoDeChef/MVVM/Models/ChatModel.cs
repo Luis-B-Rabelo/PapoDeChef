@@ -16,15 +16,16 @@ namespace FoodSocialMedia.MVVM.Models
     {
         #region Properties
 
-        private uint _chatID { get; }
+        private uint _chatID;
 
-        private uint _account1ID { get; }
+        private uint _account1ID;
 
-        private uint _account2ID { get; }
-
-        private DateOnly _chatCreationDate { get; }
+        private uint _account2ID;
 
         private ObservableCollection<MessageModel> _messages;
+
+        private DateOnly _chatCreationDate;
+
 
         #endregion
 
@@ -36,9 +37,9 @@ namespace FoodSocialMedia.MVVM.Models
 
         public uint Account2ID { get; }
 
-        public DateOnly ChatCreationDate { get; }
-
         public ObservableCollection<MessageModel> Messages;
+
+        public DateOnly ChatCreationDate { get; }
 
         #endregion
 
@@ -46,6 +47,11 @@ namespace FoodSocialMedia.MVVM.Models
 
         public void SetChatModel(IDictionary<string, object> savedChat)
         {
+            _chatID = (uint)savedChat["ChatID"];
+            _account1ID = (uint)savedChat["Account1ID"];
+            _account2ID = (uint)savedChat["Account2ID"];
+            _messages = (ObservableCollection<MessageModel>)savedChat["Messages"];
+            _chatCreationDate = (DateOnly)savedChat["ChatCreationDate"];
 
         }
 

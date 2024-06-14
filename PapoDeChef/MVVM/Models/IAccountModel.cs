@@ -4,6 +4,7 @@
 #region Downloaded Libs
 using CommunityToolkit.Mvvm.ComponentModel;
 using PapoDeChef.MVVM.Models;
+using System.Collections.ObjectModel;
 #endregion
 
 #region Project Files
@@ -68,6 +69,11 @@ namespace FoodSocialMedia.MVVM.Models
         }
 
         public List<PreviewAccountModel> Following
+        {
+            get;
+        }
+
+        public ObservableCollection<uint> Chats
         {
             get;
         }

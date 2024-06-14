@@ -4,6 +4,7 @@
 #region Downloaded Libs
 using CommunityToolkit.Mvvm.ComponentModel;
 using PapoDeChef.MVVM.Models;
+using System.Collections.ObjectModel;
 using System.Xml.Linq;
 #endregion
 
@@ -31,6 +32,8 @@ namespace FoodSocialMedia.MVVM.Models
         protected uint _qntFollowing;
 
         protected List<PreviewAccountModel> _following;
+
+        protected ObservableCollection<uint> _chats;
 
         protected byte _accessLevel;
 
@@ -85,6 +88,10 @@ namespace FoodSocialMedia.MVVM.Models
             get => _following;
         }
 
+        public ObservableCollection<uint> Chats
+        {
+            get => _chats;
+        }
 
         public byte AccessLevel
         {
