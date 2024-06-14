@@ -283,28 +283,28 @@ namespace PapoDeChef.DAO
                 index = DBConn.DB.Accounts.FindIndex(acc => (uint)acc["ID"] == followAccount.ID);
 
 
-                DBConn.DB.Accounts[index]["QntFollowers"] = (uint)DBConn.DB.Accounts[index]["QntFollowers"] - 1;
-
-                follow = (List<PreviewAccountModel>)DBConn.DB.Accounts[index]["Followers"];
-
-                follow.Remove(followerAccount);
-
-                DBConn.DB.Accounts[index]["Followers"] = follow;
-
-                index = DBConn.DB.Accounts.FindIndex(acc => (uint)acc["ID"] == followerAccount.ID);
-
                 DBConn.DB.Accounts[index]["QntFollowing"] = (uint)DBConn.DB.Accounts[index]["QntFollowing"] - 1;
 
                 follow = (List<PreviewAccountModel>)DBConn.DB.Accounts[index]["Following"];
-                follow.Remove(followAccount);
+
+                follow.Remove(followerAccount);
 
                 DBConn.DB.Accounts[index]["Following"] = follow;
+
+                index = DBConn.DB.Accounts.FindIndex(acc => (uint)acc["ID"] == followerAccount.ID);
+
+                DBConn.DB.Accounts[index]["QntFollowers"] = (uint)DBConn.DB.Accounts[index]["QntFollowers"] - 1;
+
+                follow = (List<PreviewAccountModel>)DBConn.DB.Accounts[index]["Followers"];
+                follow.Remove(followAccount);
+
+                DBConn.DB.Accounts[index]["Followers"] = follow;
 
 #if DEBUG
                 GlobalNecessities.Logger.ForDebugEvent()
                     .Message("Conta parou de seguir outra")
-                    .Property("FollowerID", followerAccount)
-                    .Property("FollowingID", followAccount)
+                    .Property("Follower", followerAccount)
+                    .Property("Following", followAccount)
                     .Log();
 #endif
 
@@ -315,8 +315,8 @@ namespace PapoDeChef.DAO
 #if DEBUG
                 GlobalNecessities.Logger.ForErrorEvent()
                     .Message("Conta não conseguiu parar de seguir outra")
-                    .Property("FollowerID", followerAccount)
-                    .Property("FollowingID", followAccount)
+                    .Property("Follower", followerAccount)
+                    .Property("Following", followAccount)
                     .Exception(ex)
                     .Log();
 #endif

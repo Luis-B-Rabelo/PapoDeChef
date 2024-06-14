@@ -105,10 +105,10 @@
 
         <templates:NavBar HorizontalAlignment="Left" VerticalAlignment="Center" />
 
-        <ListView ItemsSource="{Binding AccountPosts}" ItemTemplateSelector="{StaticResource PostTemplateSelector}" Margin="0,226,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden"  HorizontalAlignment="Center"
+        <ListView ItemsSource="{Binding AccountPosts}" ItemTemplateSelector="{StaticResource PostTemplateSelector}" Margin="0,360,0,0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Hidden"  HorizontalAlignment="Center"
 VerticalAlignment="Top"
                   HorizontalContentAlignment="Left"
-                  VerticalContentAlignment="Top">
+                  VerticalContentAlignment="Top" Width="472" Height="350">
             <ListView.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="3" HorizontalAlignment="Center"/>
@@ -160,6 +160,10 @@ VerticalAlignment="Top"
             </ListView.ItemTemplate>
 
         </ListView>
+        <Button Style="{StaticResource BotaoArredondado}" Content="Chat" Margin="960,154,228,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="18" Height="41" Command="{Binding ChatCommand}" Width="92" />
+        <Label x:Name="Bio" Content="{Binding Bio}"  Margin="410,291,416,0" VerticalAlignment="Top" FontFamily="Arial" FontSize="20" Height="43" >
+
+        </Label>
 
     </Grid>
 </Page>

@@ -62,11 +62,11 @@
             <Button FontFamily="Arial" FontSize="30" Panel.ZIndex="2" Margin="0,0,1175,633" Click="Button_Click_1">Voltar</Button>
             <StackPanel Orientation="Vertical" Margin="0,0,640,0" Background="LightGray" Width="640">
                 <Label FontFamily="Arial" FontSize="50" HorizontalContentAlignment="Center">Ingredientes</Label>
-                <TextBlock Text="{Binding Ingredients}" FontFamily="Arial" FontSize="40" Background="Transparent" Width="480" Height="602"/>
+                <TextBlock Text="{Binding Ingredients}" TextAlignment="Center" FontFamily="Arial" FontSize="40" Background="Transparent" Width="480" Height="602"/>
             </StackPanel>
             <StackPanel Orientation="Vertical" Background="LightGray" Width="640" Margin="640,0,0,0">
                 <Label FontFamily="Arial" FontSize="50" HorizontalContentAlignment="Center" Content="Modo de Preparo"/>
-                <TextBlock Text="{Binding Directions}" FontFamily="Arial" FontSize="40" Background="Transparent" Width="480" Height="602"/>
+                <TextBlock Text="{Binding Directions}" TextAlignment="Center" FontFamily="Arial" FontSize="40" Background="Transparent" Width="480" Height="602"/>
             </StackPanel>
         </Grid>
     </Grid>
